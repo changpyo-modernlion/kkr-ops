@@ -1,0 +1,254 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "crawling.fullname" . }}
+  labels:
+    {{- include "crawling.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "crawling.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "crawling.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: ETHEREUM_NETWORK
+              valueFrom:
+                configMapKeyRef:
+                  key: ethreum_network
+                  name: {{ include "crawling.fullname" . }}-config
+            - name: MARKETPLACE_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: marketplace_address
+                  name: {{ include "crawling.fullname" . }}-config
+            - name: MARKETPLACE_NFT_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: marketplace_nft_address
+                  name: {{ include "crawling.fullname" . }}-config
+            - name: NETWORK_PROVIDER
+              valueFrom:
+                configMapKeyRef:
+                  key: network_provider
+                  name: {{ include "crawling.fullname" . }}-config
+            - name: IPFS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: ipfs_host
+                  name: {{ include "crawling.fullname" . }}-config
+            - name: REFRESH_META_TIMEOUT
+              valueFrom:
+                configMapKeyRef:
+                  key: refresh_meta_timeout
+                  name: {{ include "crawling.fullname" . }}-config
+            - name: QUEUE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: host
+                  name: {{ include "crawling.fullname" . }}-aws-queue
+            - name: CONSUMER_QUEUE_COLLECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: collection
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_ALL_ITEM
+              valueFrom:
+                configMapKeyRef:
+                  key: all_item
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_ITEM
+              valueFrom:
+                configMapKeyRef:
+                  key: item
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_COLLECTION_TX
+              valueFrom:
+                configMapKeyRef:
+                  key: collection_tx
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_ITEM_TX
+              valueFrom:
+                configMapKeyRef:
+                  key: item_tx
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_NEW_ACCOUNT
+              valueFrom:
+                configMapKeyRef:
+                  key: new_account_address
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_REFRESH_ITEM_META
+              valueFrom:
+                configMapKeyRef:
+                  key: refresh_item_meta
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_EXCHANGE_EVENT
+              valueFrom:
+                configMapKeyRef:
+                  key: exchange_event
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: PRODUCER_QUEUE_COLLECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: collection
+                  name: {{ include "crawling.fullname" . }}-producer-queue
+            - name: PRODUCER_QUEUE_ALL_ITEM
+              valueFrom:
+                configMapKeyRef:
+                  key: all_item
+                  name: {{ include "crawling.fullname" . }}-producer-queue
+            - name: PRODUCER_QUEUE_ITEM
+              valueFrom:
+                configMapKeyRef:
+                  key: item
+                  name: {{ include "crawling.fullname" . }}-producer-queue
+            - name: PRODUCER_QUEUE_COLLECTION_TX
+              valueFrom:
+                configMapKeyRef:
+                  key: collection_tx
+                  name: {{ include "crawling.fullname" . }}-producer-queue
+            - name: PRODUCER_QUEUE_ITEM_TX
+              valueFrom:
+                configMapKeyRef:
+                  key: item_tx
+                  name: {{ include "crawling.fullname" . }}-producer-queue
+            - name: PRODUCER_QUEUE_NEW_ACCOUNT
+              valueFrom:
+                configMapKeyRef:
+                  key: new_account_address
+                  name: {{ include "crawling.fullname" . }}-producer-queue
+            - name: PRODUCER_QUEUE_REFRESH_ITEM_META
+              valueFrom:
+                configMapKeyRef:
+                  key: refresh_item_meta
+                  name: {{ include "crawling.fullname" . }}-producer-queue
+            - name: ALCHEMY_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: host
+                  name: {{ include "crawling.fullname" . }}-alchemy-secret
+            - name: ALCHEMY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: api_key
+                  name: {{ include "crawling.fullname" . }}-alchemy-secret
+            - name: OPENSEA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: api_key
+                  name: {{ include "crawling.fullname" . }}-opensea-secret
+            - name: BACKEND_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: host
+                  name: {{ include "crawling.fullname" . }}-backend-database-config
+            - name: BACKEND_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: user
+                  name: {{ include "crawling.fullname" . }}-backend-database-config
+            - name: BACKEND_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: {{ include "crawling.fullname" . }}-backend-database-config
+            - name: BACKEND_DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: {{ include "crawling.fullname" . }}-backend-database-config
+            - name: BACKEND_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: port
+                  name: {{ include "crawling.fullname" . }}-backend-database-config
+            - name: BACKEND_DB_ENGINE
+              valueFrom:
+                secretKeyRef:
+                  key: engine
+                  name: {{ include "crawling.fullname" . }}-backend-database-config
+            - name: ORIGINALS_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: host
+                  name: {{ include "crawling.fullname" . }}-originals-database-config
+            - name: ORIGINALS_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: user
+                  name: {{ include "crawling.fullname" . }}-originals-database-config
+            - name: ORIGINALS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: {{ include "crawling.fullname" . }}-originals-database-config
+            - name: ORIGINALS_DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database
+                  name: {{ include "crawling.fullname" . }}-originals-database-config
+            - name: ORIGINALS_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: port
+                  name: {{ include "crawling.fullname" . }}-originals-database-config
+            - name: ORIGINALS_DB_ENGINE
+              valueFrom:
+                secretKeyRef:
+                  key: engine
+                  name: {{ include "crawling.fullname" . }}-originals-database-config
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  key: region
+                  name: {{ include "crawling.fullname" . }}-aws-credentials
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: access_key
+                  name: {{ include "crawling.fullname" . }}-aws-credentials
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: secret_key
+                  name: {{ include "crawling.fullname" . }}-aws-credentials
+            - name: CLOUDFRONT_DISTRIBUTION_ID
+              valueFrom:
+                secretKeyRef:
+                  key: distribution_id
+                  name: {{ include "crawling.fullname" . }}-aws-cloudfront
+            - name: S3_BUCKET_COLLECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: bucket_collection
+                  name: {{ include "crawling.fullname" . }}-s3
+            - name: S3_BUCKET_ITEM
+              valueFrom:
+                configMapKeyRef:
+                  key: bucket_item
+                  name: {{ include "crawling.fullname" . }}-s3
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "crawling.fullname" . }}-config
+data:
+  ethreum_network: {{ default "" .Values.config.crawling.ethreum_network | quote }}
+  marketplace_address: {{ default "" .Values.config.crawling.marketplace_address | quote }}
+  marketplace_nft_address: {{ default "" .Values.config.crawling.marketplace_nft_address | quote }}
+  network_provider: {{ default "" .Values.config.crawling.network_provider | quote }}
+  ipfs_host: {{ default "" .Values.config.crawling.ipfs_host | quote }}
+  refresh_meta_timeout: {{ default "" .Values.config.crawling.refresh_meta_timeout | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "crawling.fullname" . }}-aws-queue
+data:
+  host: {{ default "" .Values.config.queue.host | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "crawling.fullname" . }}-consumer-queue
+data:
+  collection: {{ default "" .Values.config.queue.consumer.collection | quote }}
+  all_item: {{ default "" .Values.config.queue.consumer.all_item | quote }}
+  item: {{ default "" .Values.config.queue.consumer.item | quote }}
+  collection_tx: {{ default "" .Values.config.queue.consumer.collection_tx | quote }}
+  item_tx: {{ default "" .Values.config.queue.consumer.item_tx | quote }}
+  new_account_address: {{ default "" .Values.config.queue.consumer.new_account_address | quote }}
+  refresh_item_meta: {{ default "" .Values.config.queue.consumer.refresh_item_meta | quote }}
+  exchange_event: {{ default "" .Values.config.queue.consumer.exchange_event | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "crawling.fullname" . }}-producer-queue
+data:
+  collection: {{ default "" .Values.config.queue.producer.collection | quote }}
+  all_item: {{ default "" .Values.config.queue.producer.all_item | quote }}
+  item: {{ default "" .Values.config.queue.producer.item | quote }}
+  collection_tx: {{ default "" .Values.config.queue.producer.collection_tx | quote }}
+  item_tx: {{ default "" .Values.config.queue.producer.item_tx | quote }}
+  new_account_address: {{ default "" .Values.config.queue.producer.new_account_address | quote }}
+  refresh_item_meta: {{ default "" .Values.config.queue.producer.refresh_item_meta | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "crawling.fullname" . }}-s3
+data:
+  bucket_collection: {{ default "" .Values.config.s3.bucket_collection | quote }}
+  bucket_item: {{ default "" .Values.config.s3.bucket_item | quote }}

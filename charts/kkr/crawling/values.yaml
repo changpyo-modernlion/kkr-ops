@@ -1,0 +1,82 @@
+# Default values for crawling.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: 293315485843.dkr.ecr.ap-northeast-2.amazonaws.com/kkr/crawling
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+config:
+  crawling:
+    ethreum_network: ""
+    marketplace_address: ""
+    marketplace_nft_address: ""
+    network_provider: ""
+    ipfs_host: ""
+    refresh_meta_timeout: ""
+  queue:
+    host: ""
+    consumer:
+      collection: ""
+      item: ""
+      all_item: ""
+      collection_tx: ""
+      item_tx: ""
+      new_account_address: ""
+      refresh_item_meta: ""
+      exchange_event: ""
+    producer:
+      collection: ""
+      item: ""
+      all_item: ""
+      collection_tx: ""
+      item_tx: ""
+      new_account_address: ""
+      refresh_item_meta: ""
+  s3:
+    bucket_collection: ""
+    bucket_item: ""
+
+secret:
+  alchemy:
+    host: ""
+    api_key: ""
+  kas:
+    id: ""
+    secret: ""
+    auth: ""
+    chain_id: ""
+  opensea:
+    api_key: ""
+  database:
+    backend:
+      host: ""
+      engine: ""
+      database: ""
+      password: ""
+      port: ""
+      user: ""
+    originals:
+      host: ""
+      engine: ""
+      database: ""
+      password: ""
+      port: ""
+      user: ""
+  aws:
+    credentials:
+      region: ""
+      access_key: ""
+      secret_key: ""
+    cloudfront:
+      distribution_id: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
