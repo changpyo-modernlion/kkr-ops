@@ -14,6 +14,22 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+secret:
+  database:
+    host: ""
+    engine: ""
+    database: ""
+    password: ""
+    port: ""
+    user: ""
+  aws:
+    accessKey: ""
+    accessSecret: ""
+    region: ""
+
+config:
+  bucketName: ""
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

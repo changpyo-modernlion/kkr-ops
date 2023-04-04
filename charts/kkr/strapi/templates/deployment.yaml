@@ -37,48 +37,48 @@ spec:
           - name: DATABASE_CLIENT
             secretKeyRef:
               key: engine
-              name: {{ tpl "strapi.secretNameForDB" . }}
+              name: {{ include "strapi.secretNameForDB" . }}
           - name: DATABASE_HOST
             secretKeyRef:
               key: host
-              name: {{ tpl "strapi.secretNameForDB" . }}
+              name: {{ include "strapi.secretNameForDB" . }}
           - name: DATABASE_PORT
             secretKeyRef:
               key: port
-              name: {{ tpl "strapi.secretNameForDB" . }}
+              name: {{ include "strapi.secretNameForDB" . }}
           - name: DATABASE_NAME
             secretKeyRef:
               key: name
-              name: {{ tpl "strapi.secretNameForDB" . }}
+              name: {{ include "strapi.secretNameForDB" . }}
           - name: DATABASE_USERNAME
             secretKeyRef:
               key: user
-              name: {{ tpl "strapi.secretNameForDB" . }}
+              name: {{ include "strapi.secretNameForDB" . }}
           - name: DATABASE_PASSWORD
             secretKeyRef:
-              key: pass
-              name: {{ tpl "strapi.secretNameForDB" . }}
+              key: password
+              name: {{ include "strapi.secretNameForDB" . }}
           - name: DATABASE_SSL
             value: "false"
           - name: AWS_ACCESS_KEY_ID
             secretKeyRef:
-              key: access_key
-              name: {{ tpl "strapi.secretNameForAWS" . }}
+              key: accessKey
+              name: {{ include "strapi.secretNameForAWS" . }}
           - name: AWS_ACCESS_SECRET
             secretKeyRef:
-              key: access_secret
-              name: {{ tpl "strapi.secretNameForAWS" . }}
+              key: accessSecret
+              name: {{ include "strapi.secretNameForAWS" . }}
           - name: AWS_REGION
             secretKeyRef:
               key: region
-              name: {{ tpl "strapi.secretNameForAWS" . }}
+              name: {{ include "strapi.secretNameForAWS" . }}
           - name: AWS_BUCKET_NAME
-            secretKeyRef:
-              key: bucket_name
-              name: {{ tpl "strapi.secretNameForAWS" . }}
+            configMapKeyRef:
+              key: bucketName
+              name: {{ include "strapi.configMapNameForCommon" . }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 1337
               protocol: TCP
           livenessProbe:
             httpGet:
