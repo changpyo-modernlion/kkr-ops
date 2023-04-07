@@ -1,0 +1,176 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "admin-wallet-api.fullname" . }}
+  labels:
+    {{- include "admin-wallet-api.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "admin-wallet-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "admin-wallet-api.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: dbHost
+                  name: {{ include "admin-wallet-api.fullname" . }}-db
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: dbUser
+                  name: {{ include "admin-wallet-api.fullname" . }}-db
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: dbPassword
+                  name: {{ include "admin-wallet-api.fullname" . }}-db
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: dbDatabase
+                  name: {{ include "admin-wallet-api.fullname" . }}-db
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: dbPort
+                  name: {{ include "admin-wallet-api.fullname" . }}-db
+            - name: DB_ENGINE
+              valueFrom:
+                secretKeyRef:
+                  key: dbEngine
+                  name: {{ include "admin-wallet-api.fullname" . }}-db
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  key: awsRegion
+                  name: {{ include "admin-wallet-api.fullname" . }}-aws
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: awsAccessKey
+                  name: {{ include "admin-wallet-api.fullname" . }}-aws
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: awsSecretKey
+                  name: {{ include "admin-wallet-api.fullname" . }}-aws
+            - name: AWS_ADMIN_WALLET_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: awsAdminWalletQueueName
+                  name: {{ include "admin-wallet-api.fullname" . }}-aws
+            - name: AWS_ADMIN_WALLET_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: awsAdminWalletQueueUrl
+                  name: {{ include "admin-wallet-api.fullname" . }}-aws
+            - name: ETHEREUM_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: ethereumProviderUrl
+                  name: {{ include "admin-wallet-api.fullname" . }}-provider
+            - name: POLYGON_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: polygonProviderUrl
+                  name: {{ include "admin-wallet-api.fullname" . }}-provider
+            - name: OCTET_OHNIM_WALLET_NUMBER
+              valueFrom:
+                secretKeyRef:
+                  key: octetOhnimWalletNumber
+                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
+            - name: OCTET_OHNIM_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: octetOhnimApiToken
+                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
+            - name: OCTET_OHNIM_CHILD_ADMIN_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: octetOhnimChildAdminAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
+            - name: OHNIM_CONTRACT_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: ohnimContractAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
+            - name: OHNIM_MINTER_CONTRACT_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: ohnimMinterContractAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
+            - name: OCTET_LVC_WALLET_NUMBER
+              valueFrom:
+                secretKeyRef:
+                  key: octetLvcWalletNumber
+                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
+            - name: OCTET_LVC_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: octetLvcApiToken
+                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
+            - name: OCTET_LVC_CHILD_ADMIN_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: octetLvcChildAdminAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
+            - name: LVC_CONTRACT_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: lvcContractAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
+            - name: LVC_MINTER_CONTRACT_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: lvcMinterContractAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api/v1/public/admin/wallet/health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /api/v1/public/admin/wallet/health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

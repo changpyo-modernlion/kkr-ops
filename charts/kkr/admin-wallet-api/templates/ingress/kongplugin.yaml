@@ -1,0 +1,25 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: configuration.konghq.com/v1
+config:
+  origins:
+  - '*'
+kind: KongPlugin
+metadata:
+  name: {{ include "admin-wallet-api.cors" . }}
+plugin: cors
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  auth_method: client_secret_basic
+  auth_response_headers_to_forward:
+  - sub
+  - current-address
+  client_id: {{ default "" .Values.config.oauth.clientId | quote }}
+  client_secret: {{ default "" .Values.config.oauth.clientSecret | quote }}
+  token_introspect_url: {{ default "" .Values.config.oauth.tokenIntrospectUrl | quote }}
+
+kind: KongPlugin
+metadata:
+  name: {{ include "admin-wallet-api.validateAuthServerToken" . }}
+plugin: oauth2-token-introspection-request
+{{- end }}

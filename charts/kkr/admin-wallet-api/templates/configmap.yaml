@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "admin-wallet-api.fullname" . }}-provider
+data:
+  ethereumProviderUrl: {{ default "" .Values.config.provider.ethereumProviderUrl | quote }}
+  polygonProviderUrl: {{ default "" .Values.config.provider.polygonProviderUrl | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "admin-wallet-api.fullname" . }}-aws
+data:
+  awsAdminWalletQueueName: {{ default "" .Values.config.aws.adminWalletQueueName | quote }}
+  awsAdminWalletQueueUrl: {{ default "" .Values.config.aws.adminWalletQueueUrl | quote }}
