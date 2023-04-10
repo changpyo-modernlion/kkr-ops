@@ -4,11 +4,13 @@ metadata:
   name: {{ include "crawling.fullname" . }}
   labels:
     {{- include "crawling.labels" . | nindent 4 }}
+    {{- include "crawling.datadogLabels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "crawling.selectorLabels" . | nindent 6 }}
+      {{- include "crawling.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,6 +19,7 @@ spec:
       {{- end }}
       labels:
         {{- include "crawling.selectorLabels" . | nindent 8 }}
+        {{- include "crawling.datadogSelectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -26,32 +29,32 @@ spec:
             - name: ETHEREUM_NETWORK
               valueFrom:
                 configMapKeyRef:
-                  key: ethreum_network
+                  key: ethreumNetwork
                   name: {{ include "crawling.fullname" . }}-config
             - name: MARKETPLACE_ADDRESS
               valueFrom:
                 configMapKeyRef:
-                  key: marketplace_address
+                  key: marketplaceAddress
                   name: {{ include "crawling.fullname" . }}-config
             - name: MARKETPLACE_NFT_ADDRESS
               valueFrom:
                 configMapKeyRef:
-                  key: marketplace_nft_address
+                  key: marketplaceNftAddress
                   name: {{ include "crawling.fullname" . }}-config
             - name: NETWORK_PROVIDER
               valueFrom:
                 configMapKeyRef:
-                  key: network_provider
+                  key: networkProvider
                   name: {{ include "crawling.fullname" . }}-config
             - name: IPFS_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: ipfs_host
+                  key: ipfsHost
                   name: {{ include "crawling.fullname" . }}-config
             - name: REFRESH_META_TIMEOUT
               valueFrom:
                 configMapKeyRef:
-                  key: refresh_meta_timeout
+                  key: refreshMetaTimeout
                   name: {{ include "crawling.fullname" . }}-config
             - name: QUEUE_HOST
               valueFrom:
@@ -66,7 +69,7 @@ spec:
             - name: CONSUMER_QUEUE_ALL_ITEM
               valueFrom:
                 configMapKeyRef:
-                  key: all_item
+                  key: allItem
                   name: {{ include "crawling.fullname" . }}-consumer-queue
             - name: CONSUMER_QUEUE_ITEM
               valueFrom:
@@ -76,27 +79,27 @@ spec:
             - name: CONSUMER_QUEUE_COLLECTION_TX
               valueFrom:
                 configMapKeyRef:
-                  key: collection_tx
+                  key: collectionTx
                   name: {{ include "crawling.fullname" . }}-consumer-queue
             - name: CONSUMER_QUEUE_ITEM_TX
               valueFrom:
                 configMapKeyRef:
-                  key: item_tx
+                  key: itemTx
                   name: {{ include "crawling.fullname" . }}-consumer-queue
             - name: CONSUMER_QUEUE_NEW_ACCOUNT
               valueFrom:
                 configMapKeyRef:
-                  key: new_account_address
+                  key: newAccountAddress
                   name: {{ include "crawling.fullname" . }}-consumer-queue
             - name: CONSUMER_QUEUE_REFRESH_ITEM_META
               valueFrom:
                 configMapKeyRef:
-                  key: refresh_item_meta
+                  key: refreshItemMeta
                   name: {{ include "crawling.fullname" . }}-consumer-queue
             - name: CONSUMER_QUEUE_EXCHANGE_EVENT
               valueFrom:
                 configMapKeyRef:
-                  key: exchange_event
+                  key: exchangeEvent
                   name: {{ include "crawling.fullname" . }}-consumer-queue
             - name: PRODUCER_QUEUE_COLLECTION
               valueFrom:
@@ -106,7 +109,7 @@ spec:
             - name: PRODUCER_QUEUE_ALL_ITEM
               valueFrom:
                 configMapKeyRef:
-                  key: all_item
+                  key: allItem
                   name: {{ include "crawling.fullname" . }}-producer-queue
             - name: PRODUCER_QUEUE_ITEM
               valueFrom:
@@ -116,22 +119,22 @@ spec:
             - name: PRODUCER_QUEUE_COLLECTION_TX
               valueFrom:
                 configMapKeyRef:
-                  key: collection_tx
+                  key: collectionTx
                   name: {{ include "crawling.fullname" . }}-producer-queue
             - name: PRODUCER_QUEUE_ITEM_TX
               valueFrom:
                 configMapKeyRef:
-                  key: item_tx
+                  key: itemTx
                   name: {{ include "crawling.fullname" . }}-producer-queue
             - name: PRODUCER_QUEUE_NEW_ACCOUNT
               valueFrom:
                 configMapKeyRef:
-                  key: new_account_address
+                  key: newAccountAddress
                   name: {{ include "crawling.fullname" . }}-producer-queue
             - name: PRODUCER_QUEUE_REFRESH_ITEM_META
               valueFrom:
                 configMapKeyRef:
-                  key: refresh_item_meta
+                  key: refreshItemMeta
                   name: {{ include "crawling.fullname" . }}-producer-queue
             - name: ALCHEMY_HOST
               valueFrom:
@@ -141,12 +144,12 @@ spec:
             - name: ALCHEMY_API_KEY
               valueFrom:
                 secretKeyRef:
-                  key: api_key
+                  key: apiKey
                   name: {{ include "crawling.fullname" . }}-alchemy-secret
             - name: OPENSEA_API_KEY
               valueFrom:
                 secretKeyRef:
-                  key: api_key
+                  key: apiKey
                   name: {{ include "crawling.fullname" . }}-opensea-secret
             - name: BACKEND_DB_HOST
               valueFrom:
@@ -216,28 +219,42 @@ spec:
             - name: AWS_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  key: access_key
+                  key: accessKey
                   name: {{ include "crawling.fullname" . }}-aws-credentials
             - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: secret_key
+                  key: secretKey
                   name: {{ include "crawling.fullname" . }}-aws-credentials
             - name: CLOUDFRONT_DISTRIBUTION_ID
               valueFrom:
                 secretKeyRef:
-                  key: distribution_id
+                  key: distributionId
                   name: {{ include "crawling.fullname" . }}-aws-cloudfront
             - name: S3_BUCKET_COLLECTION
               valueFrom:
                 configMapKeyRef:
-                  key: bucket_collection
+                  key: bucketCollection
                   name: {{ include "crawling.fullname" . }}-s3
             - name: S3_BUCKET_ITEM
               valueFrom:
                 configMapKeyRef:
-                  key: bucket_item
+                  key: bucketItem
                   name: {{ include "crawling.fullname" . }}-s3
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_PROFILING_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: ddProfilingEnabled
+                  name: {{ include "crawling.fullname" . }}-datadog
+            - name: DD_LOGS_INJECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: ddLogsInjectionEnabled
+                  name: {{ include "crawling.fullname" . }}-datadog
           ports:
             - name: http
               containerPort: 3000

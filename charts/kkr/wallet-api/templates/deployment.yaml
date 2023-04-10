@@ -4,6 +4,7 @@ metadata:
   name: {{ include "wallet-api.fullname" . }}
   labels:
     {{- include "wallet-api.labels" . | nindent 4 }}
+    {{- include "wallet-api.datadogLabels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -11,6 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "wallet-api.selectorLabels" . | nindent 6 }}
+      {{- include "wallet-api.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +21,7 @@ spec:
       {{- end }}
       labels:
         {{- include "wallet-api.selectorLabels" . | nindent 8 }}
+        {{- include "wallet-api.datadogSelectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -36,158 +39,172 @@ spec:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  key: db-host
+                  key: dbHost
                   name: {{ include "wallet-api.fullname" . }}-db
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  key: db-user
+                  key: dbUser
                   name: {{ include "wallet-api.fullname" . }}-db
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: db-password
+                  key: dbPassword
                   name: {{ include "wallet-api.fullname" . }}-db
             - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  key: db-database
+                  key: dbDatabase
                   name: {{ include "wallet-api.fullname" . }}-db
             - name: DB_PORT
               valueFrom:
                 secretKeyRef:
-                  key: db-port
+                  key: dbPort
                   name: {{ include "wallet-api.fullname" . }}-db
             - name: DB_ENGINE
               valueFrom:
                 secretKeyRef:
-                  key: db-engine
+                  key: dbEngine
                   name: {{ include "wallet-api.fullname" . }}-db
             - name: AWS_REGION
               valueFrom:
                 secretKeyRef:
-                  key: aws-region
+                  key: awsRegion
                   name: {{ include "wallet-api.fullname" . }}-aws
             - name: AWS_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  key: aws-access-key
+                  key: awsAccessKey
                   name: {{ include "wallet-api.fullname" . }}-aws
             - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: aws-secret-key
+                  key: awsSecretKey
                   name: {{ include "wallet-api.fullname" . }}-aws
             - name: AWS_WALLET_CREATE_NOTIFICATION_QUEUE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: aws-wallet-create-notification-queue-name
+                  key: awsWalletCreateNotificationQueueName
                   name: {{ include "wallet-api.fullname" . }}-aws
             - name: AWS_WALLET_CREATE_NOTIFICATION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: aws-wallet-create-notification-queue-url
+                  key: awsWalletCreateNotificationQueueUrl
                   name: {{ include "wallet-api.fullname" . }}-aws
             - name: OCTET_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  key: octet-api-token
+                  key: octetApiToken
                   name: {{ include "wallet-api.fullname" . }}-octet
             - name: OCTET_BASE_URL
               valueFrom:
                 secretKeyRef:
-                  key: octet-base-url
+                  key: octetBaseUrl
                   name: {{ include "wallet-api.fullname" . }}-octet
             - name: WALLET_IDX
               valueFrom:
                 secretKeyRef:
-                  key: wallet-idx
+                  key: walletIdx
                   name: {{ include "wallet-api.fullname" . }}-octet
             - name: OCTET_DELEGATE_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  key: delegate-api-token
+                  key: delegateApiToken
                   name: {{ include "wallet-api.fullname" . }}-delegate
             - name: OCTET_DELEGATE_WALLET_IDX
               valueFrom:
                 secretKeyRef:
-                  key: delegate-wallet-id
+                  key: delegateWalletId
                   name: {{ include "wallet-api.fullname" . }}-delegate
             - name: OCTET_DELEGATE_CHILD_ADMIN_ADDRESS
               valueFrom:
                 secretKeyRef:
-                  key: delegate-child-admin-address
+                  key: delegateChildAdminAddress
                   name: {{ include "wallet-api.fullname" . }}-delegate
             - name: MAXIMUM_DELEGATE_GAS_PRICE
               valueFrom:
                 secretKeyRef:
-                  key: delegate-maximum-gas-price
+                  key: delegateMaximumGasPrice
                   name: {{ include "wallet-api.fullname" . }}-delegate
             - name: MAXIMUM_DELEGATE_COUNT_PER_DAY
               valueFrom:
                 secretKeyRef:
-                  key: delegate-maximum-count-per-day
+                  key: delegateMaximumCountPerDay
                   name: {{ include "wallet-api.fullname" . }}-delegate
             - name: RECOVERY_PIN
               valueFrom:
                 secretKeyRef:
-                  key: recovery-pin
+                  key: recoveryPin
                   name: {{ include "wallet-api.fullname" . }}-octet
             - name: ALCHEMY_API_KEY
               valueFrom:
                 secretKeyRef:
-                  key: alchemy-api-key
+                  key: alchemyApiKey
                   name: {{ include "wallet-api.fullname" . }}-alchemy
             - name: ALCHEMY_HOST
               valueFrom:
                 secretKeyRef:
-                  key: alchemy-host
+                  key: alchemyHost
                   name: {{ include "wallet-api.fullname" . }}-alchemy
             - name: JWT_EXPIRES_IN
               valueFrom:
                 configMapKeyRef:
-                  key: jwt-expires-in
+                  key: jwtExpiresIn
                   name: {{ include "wallet-api.fullname" . }}-jwt
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  key: jwt-secret
+                  key: jwtSecret
                   name: {{ include "wallet-api.fullname" . }}-jwt
             - name: JWT_AUTH_SECRET
               valueFrom:
                 secretKeyRef:
-                  key: jwt-auth-secret
+                  key: jwtAuthSecret
                   name: {{ include "wallet-api.fullname" . }}-jwt
             - name: HASH_IDS_KEY
               valueFrom:
                 secretKeyRef:
-                  key: hash-ids-key
+                  key: hashIdsKey
                   name: {{ include "wallet-api.fullname" . }}-encoding
             - name: RSA_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
-                  key: rsa-private-key
+                  key: rsaPrivateKey
                   name: {{ include "wallet-api.fullname" . }}-encoding
             - name: RSA_PUBLIC_KEY
               valueFrom:
                 secretKeyRef:
-                  key: rsa-public-key
+                  key: rsaPublicKey
                   name: {{ include "wallet-api.fullname" . }}-encoding
             - name: CHAIN_ID
               valueFrom:
                configMapKeyRef:
-                  key: chain-id
+                  key: chainId
                   name: {{ include "wallet-api.fullname" . }}-common
             - name: ETHEREUM_BACKEND_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: ethereum-backend-host
+                  key: ethereumBackendHost
                   name: {{ include "wallet-api.fullname" . }}-common
             - name: POLYGON_BACKEND_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: polygon-backend-host
+                  key: polygonBackendHost
                   name: {{ include "wallet-api.fullname" . }}-common
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_PROFILING_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: ddProfilingEnabled
+                  name: {{ include "wallet-api.fullname" . }}-datadog
+            - name: DD_LOGS_INJECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: ddLogsInjectionEnabled
+                  name: {{ include "wallet-api.fullname" . }}-datadog
           ports:
             - name: http
               containerPort: 3000

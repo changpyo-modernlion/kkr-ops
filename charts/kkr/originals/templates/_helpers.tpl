@@ -62,6 +62,24 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Datadog Labels
+*/}}
+{{- define "originals.datadogLabels" -}}
+tags.datadoghq.com/env: {{ .Release.Namespace }}
+tags.datadoghq.com/service: {{ .Release.Name }}
+tags.datadoghq.com/version: {{ .Chart.Version }}
+{{- end }}
+
+{{/*
+Datadog selectorLabels
+*/}}
+{{- define "originals.datadogSelectorLabels" -}}
+{{ include "originals.datadogLabels" . }}
+admission.datadoghq.com/enabled: "true"
+admission.datadoghq.com/config.mode: "socket"
+{{- end }}
+
+{{/*
 Create kongplugin name of cors
 */}}
 {{- define "originals.cors" -}}

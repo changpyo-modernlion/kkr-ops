@@ -16,12 +16,16 @@ config:
   oauthTokenEndpoint: ""
   getNonceEndpoint: ""
   oauthScope: ""
+  datadog:
+    ddProfilingEnabled: "true"
+    ddLogsInjectionEnabled: "true"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-podAnnotations: {}
+podAnnotations:
+  - admission.datadoghq.com/js-lib.version: v3.16.0
 
 podSecurityContext: {}
   # fsGroup: 2000

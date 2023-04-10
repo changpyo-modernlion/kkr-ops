@@ -60,3 +60,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Datadog Labels
+*/}}
+{{- define "auth-proxy.datadogLabels" -}}
+tags.datadoghq.com/env: {{ .Release.Namespace }}
+tags.datadoghq.com/service: {{ .Release.Name }}
+tags.datadoghq.com/version: {{ .Chart.Version }}
+{{- end }}
+
+{{/*
+Datadog selectorLabels
+*/}}
+{{- define "auth-proxy.datadogSelectorLabels" -}}
+{{ include "auth-proxy.datadogLabels" . }}
+admission.datadoghq.com/enabled: "true"
+admission.datadoghq.com/config.mode: "socket"
+{{- end }}

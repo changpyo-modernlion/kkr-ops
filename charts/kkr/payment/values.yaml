@@ -16,15 +16,15 @@ fullnameOverride: ""
 
 config:
   backend:
-    backend_host: ""
-    frontend_host: ""
-    originals_host: ""
-    in_app_host: ""
-    ethereum_network: ""
+    backendHost: ""
+    frontendHost: ""
+    originalsHost: ""
+    inAppHost: ""
+    ethereumNetwork: ""
   oauth:
-    client_id: "test"
-    client_secret: "secret"
-    token_introspect_url: "http://auth.test-seokjae/oauth/token/introspec"
+    clientId: "test"
+    clientSecret: "secret"
+    tokenIntrospectUrl: "http://auth.test-seokjae/oauth/token/introspec"
   aws:
     queue:
       rapidCrawlingCollectionQueueName: ""
@@ -33,16 +33,19 @@ config:
       rapidCrawlingItemQueueUrl: ""
       rapidCrawlingRefreshItemMetaQueueName: ""
       rapidCrawlingRefreshItemMetaQueueUrl: ""
+  datadog:
+    ddProfilingEnabled: "true"
+    ddLogsInjectionEnabled: "true"
 
 secret:
   hecto:
-    hash_secret: ""
+    hashSecret: ""
     mid: ""
-    net_pay_cancle: ""
-    payment_info: ""
-    pay_cancle: ""
-    pay_approve: ""
-    tr_info: ""
+    netPayCancle: ""
+    paymentInfo: ""
+    payCancle: ""
+    payApprove: ""
+    trInfo: ""
   database:
     host: ""
     engine: ""
@@ -50,15 +53,16 @@ secret:
     password: ""
     port: ""
     user: ""
-    pool_size: ""
+    poolAize: ""
   alchemy:
-    api_key: ""
+    apiKey: ""
   aws:
     region: ""
-    access_key: ""
-    secret_key: ""
+    accessKey: ""
+    secretKey: ""
 
-podAnnotations: {}
+podAnnotations:
+  - admission.datadoghq.com/js-lib.version: v3.16.0
 
 podSecurityContext:
   {}

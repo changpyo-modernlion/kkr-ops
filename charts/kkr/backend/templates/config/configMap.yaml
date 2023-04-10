@@ -3,14 +3,14 @@ kind: ConfigMap
 metadata:
   name: {{ include "backend.fullname" . }}-common
 data:
-  ethreum_network: {{ default "" .Values.config.backend.ethreum_network | quote }}
-  marketplace_nft_address: {{ default "" .Values.config.backend.marketplace_nft_address | quote }}
-  network_provider: {{ default "" .Values.config.backend.network_provider | quote }}
-  event_listener_host: {{ default "" .Values.config.event_listener_host | quote }}
-  account_api_base_url: {{ default "" .Values.config.backend.account_api_base_url | quote }}
-  chain_id: {{ default "" .Values.config.backend.chain_id | quote }}
-  payment_host: {{ default "" .Values.config.backend.payment_host | quote }}
-  originals_host: {{ default "" .Values.config.backend.originals_host | quote }}
+  ethreumNetwork: {{ default "" .Values.config.backend.ethreumNetwork | quote }}
+  marketplaceNftAddress: {{ default "" .Values.config.backend.marketplaceNftAddress | quote }}
+  networkProvider: {{ default "" .Values.config.backend.networkProvider | quote }}
+  eventListenerHost: {{ default "" .Values.config.eventListenerHost | quote }}
+  accountApiBaseUrl: {{ default "" .Values.config.backend.accountApiBaseUrl | quote }}
+  chainId: {{ default "" .Values.config.backend.chainId | quote }}
+  paymentHost: {{ default "" .Values.config.backend.paymentHost | quote }}
+  originalsHost: {{ default "" .Values.config.backend.originalsHost | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -47,6 +47,14 @@ kind: ConfigMap
 metadata:
   name: {{ include "backend.fullname" . }}-contract
 data:
-  marketplace: {{ default "" .Values.config.contract_address.market | quote }}
-  weth: {{ default "" .Values.config.contract_address.weth | quote }}
-  usdc: {{ default "" .Values.config.contract_address.usdc | quote }}
+  marketplace: {{ default "" .Values.config.contractAddress.market | quote }}
+  weth: {{ default "" .Values.config.contractAddress.weth | quote }}
+  usdc: {{ default "" .Values.config.contractAddress.usdc | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "backend.fullname" . }}-datadog
+data:
+  ddProfilingEnabled: {{ default "" .Values.config.datadog.ddProfilingEnabled | quote }}
+  ddLogsInjectionEnabled: {{ default "" .Values.config.datadog.ddLogsInjectionEnabled | quote }}

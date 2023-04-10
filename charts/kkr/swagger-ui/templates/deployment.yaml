@@ -37,27 +37,27 @@ spec:
             - name: OAUTH_ENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  key: oauth_endpoint
+                  key: oauthEndpoint
                   name: {{ include "swagger-ui.fullname" . }}-common
             - name: OAUTH_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
-                  key: oauth_client_id
+                  key: oauthClientId
                   name: {{ include "swagger-ui.fullname" . }}-common
             - name: OAUTH_CLIENT_SECRET
               valueFrom:
                 configMapKeyRef:
-                  key: oauth_client_secret
+                  key: oauthClientSecret
                   name: {{ include "swagger-ui.fullname" . }}-common
             - name: SWAGGER_URI
               valueFrom:
                 configMapKeyRef:
-                  key: swagger_uri
+                  key: swaggerUri
                   name: {{ include "swagger-ui.fullname" . }}-common
             - name: NEXT_PUBLIC_BASE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: next_public_base_url
+                  key: nextPublicBaseUrl
                   name: {{ include "swagger-ui.fullname" . }}-common
           ports:
             - name: http

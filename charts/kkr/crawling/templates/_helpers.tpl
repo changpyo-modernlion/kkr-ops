@@ -64,3 +64,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Datadog Labels
+*/}}
+{{- define "crawling.datadogLabels" -}}
+tags.datadoghq.com/env: {{ .Release.Namespace }}
+tags.datadoghq.com/service: {{ .Release.Name }}
+tags.datadoghq.com/version: {{ .Chart.Version }}
+{{- end }}
+
+{{/*
+Datadog selectorLabels
+*/}}
+{{- define "crawling.datadogSelectorLabels" -}}
+{{ include "crawling.datadogLabels" . }}
+admission.datadoghq.com/enabled: "true"
+admission.datadoghq.com/config.mode: "socket"
+{{- end }}

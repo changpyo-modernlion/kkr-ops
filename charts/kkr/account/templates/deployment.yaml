@@ -4,6 +4,7 @@ metadata:
   name: {{ include "account.fullname" . }}
   labels:
     {{- include "account.labels" . | nindent 4 }}
+    {{- include "account.datadogLabels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -11,6 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "account.selectorLabels" . | nindent 6 }}
+      {{- include "account.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +21,7 @@ spec:
       {{- end }}
       labels:
         {{- include "account.selectorLabels" . | nindent 8 }}
+        {{- include "account.datadogSelectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -66,13 +69,27 @@ spec:
             - name: ALCHEMY_API_KEY
               valueFrom:
                 configMapKeyRef:
-                  key: alchemy-api-key
+                  key: alchemyApiKey
                   name: {{ include "account.fullname" . }}
             - name: ALCHEMY_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: alchemy-host
+                  key: alchemyHost
                   name: {{ include "account.fullname" . }}
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_PROFILING_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: ddProfilingEnabled
+                  name: {{ include "account.fullname" . }}-datadog
+            - name: DD_LOGS_INJECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: ddLogsInjectionEnabled
+                  name: {{ include "account.fullname" . }}-datadog
           ports:
             - name: http
               containerPort: 3000

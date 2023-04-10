@@ -5,3 +5,11 @@ metadata:
 data:
   ethereumBackendHost: {{ default "" .Values.config.backend.ethereumBackendHost | quote }}
   polygonBackendHost: {{ default "" .Values.config.backend.polygonBackendHost | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "originals.fullname" . }}-datadog
+data:
+  ddProfilingEnabled: {{ default "" .Values.config.datadog.ddProfilingEnabled | quote }}
+  ddLogsInjectionEnabled: {{ default "" .Values.config.datadog.ddLogsInjectionEnabled | quote }}

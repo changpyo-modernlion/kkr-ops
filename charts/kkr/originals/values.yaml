@@ -22,6 +22,9 @@ config:
     client_id: "client_id"
     client_secret: "client_secret"
     token_introspect_url: "http://auth.test-seokjae/oauth/token/introspec"
+  datadog:
+    ddProfilingEnabled: "true"
+    ddLogsInjectionEnabled: "true"
 
 secret:
   database:
@@ -48,7 +51,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  - admission.datadoghq.com/js-lib.version: v3.16.0
 
 podSecurityContext:
   {}

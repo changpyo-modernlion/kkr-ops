@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: {{ include "swagger-ui.fullname" . }}-common
 data:
-  chain_id: {{ default "" .Values.config.common.chain_id | quote }}
-  oauth_client_id: {{ default "" .Values.config.common.oauth_client_id | quote }}
-  oauth_endpoint: {{ default "" .Values.config.common.oauth_endpoint | quote }}
-  oauth_client_secret: {{ default "" .Values.config.common.oauth_client_secret | quote }}
-  swagger_uri: {{ default "" .Values.config.common.swagger_uri | quote }}
-  next_public_base_url: {{ default "" .Values.config.common.next_public_base_url | quote }}
+  chainId: {{ default "" .Values.config.common.chainId | quote }}
+  oauthClientId: {{ default "" .Values.config.common.oauthClientId | quote }}
+  oauthEndpoint: {{ default "" .Values.config.common.oauthEndpoint | quote }}
+  oauthClientSecret: {{ default "" .Values.config.common.oauthClientSecret | quote }}
+  swaggerUri: {{ default "" .Values.config.common.swaggerUri | quote }}
+  nextPublicBaseUrl: {{ default "" .Values.config.common.nextPublicBaseUrl | quote }}

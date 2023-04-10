@@ -12,46 +12,49 @@ image:
 
 config:
   crawling:
-    ethreum_network: ""
-    marketplace_address: ""
-    marketplace_nft_address: ""
-    network_provider: ""
-    ipfs_host: ""
-    refresh_meta_timeout: ""
+    ethreumNetwork: ""
+    marketplaceAddress: ""
+    marketplaceNftAddress: ""
+    networkProvider: ""
+    ipfsHost: ""
+    refreshMetaTimeout: ""
   queue:
     host: ""
     consumer:
       collection: ""
       item: ""
-      all_item: ""
-      collection_tx: ""
-      item_tx: ""
-      new_account_address: ""
-      refresh_item_meta: ""
-      exchange_event: ""
+      allItem: ""
+      collectionTx: ""
+      itemTx: ""
+      new_accountAddress: ""
+      refreshItemMeta: ""
+      exchangeEvent: ""
     producer:
       collection: ""
       item: ""
-      all_item: ""
-      collection_tx: ""
-      item_tx: ""
-      new_account_address: ""
-      refresh_item_meta: ""
+      allItem: ""
+      collectionTx: ""
+      itemTx: ""
+      newAccountAddress: ""
+      refreshItemMeta: ""
   s3:
-    bucket_collection: ""
-    bucket_item: ""
+    bucketCollection: ""
+    bucketItem: ""
+  datadog:
+    ddProfilingEnabled: "true"
+    ddLogsInjectionEnabled: "true"
 
 secret:
   alchemy:
     host: ""
-    api_key: ""
+    apiKey: ""
   kas:
     id: ""
     secret: ""
     auth: ""
-    chain_id: ""
+    chainId: ""
   opensea:
-    api_key: ""
+    apiKey: ""
   database:
     backend:
       host: ""
@@ -70,13 +73,16 @@ secret:
   aws:
     credentials:
       region: ""
-      access_key: ""
-      secret_key: ""
+      accessKey: ""
+      secretKey: ""
     cloudfront:
-      distribution_id: ""
+      distributionId: ""
 
 service:
   type: ClusterIP
   port: 80
 
 resources: {}
+
+podAnnotations:
+  - admission.datadoghq.com/js-lib.version: v3.16.0

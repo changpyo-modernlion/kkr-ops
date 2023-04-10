@@ -3,5 +3,13 @@ kind: ConfigMap
 metadata:
   name: {{ include "account.fullname" . }}
 data:
-  alchemy-api-key: {{ default "" .Values.config.alchemy.apiKey | quote }}
-  alchemy-host: {{ default "" .Values.config.alchemy.host | quote }}
+  alchemyApiKey: {{ default "" .Values.config.alchemy.apiKey | quote }}
+  alchemyHost: {{ default "" .Values.config.alchemy.host | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "account.fullname" . }}-datadog
+data:
+  ddProfilingEnabled: {{ default "" .Values.config.datadog.ddProfilingEnabled | quote }}
+  ddLogsInjectionEnabled: {{ default "" .Values.config.datadog.ddLogsInjectionEnabled | quote }}

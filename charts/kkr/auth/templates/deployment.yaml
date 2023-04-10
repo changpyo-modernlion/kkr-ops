@@ -4,6 +4,7 @@ metadata:
   name: {{ include "auth.fullname" . }}
   labels:
     {{- include "auth.labels" . | nindent 4 }}
+    {{- include "auth.datadogLabels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -11,6 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "auth.selectorLabels" . | nindent 6 }}
+      {{- include "auth.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +21,7 @@ spec:
       {{- end }}
       labels:
         {{- include "auth.selectorLabels" . | nindent 8 }}
+        {{- include "auth.datadogSelectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -68,128 +71,142 @@ spec:
             - name: OAUTH2_TOKEN_EXPIRES_IN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: oauth2-token-expires-in-password
+                  key: oauth2TokenExpiresInPassword
                   name: {{ include "auth.fullname" . }}-oauth
             - name: OAUTH2_REFRESH_TOKEN_EXPIRES_IN
               valueFrom:
                 secretKeyRef:
-                  key: oauth2-refresh-token-expires-in
+                  key: oauth2RefreshTokenExpiresIn
                   name: {{ include "auth.fullname" . }}-oauth
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: secret-key
+                  key: secretKey
                   name: {{ include "auth.fullname" . }}-oauth
             - name: RESET_PIN_JWT_EXP
               valueFrom:
                 secretKeyRef:
-                  key: reset-pin-jwt-exp
+                  key: resetPinJwtExp
                   name: {{ include "auth.fullname" . }}-oauth
             - name: AWS_REGION
               valueFrom:
                 secretKeyRef:
-                  key: aws-region
+                  key: awsRegion
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_ACCESS_KEY
               valueFrom:
                secretKeyRef:
-                  key: aws-access-key
+                  key: awsAccessKey
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: aws-secret-key
+                  key: awsSecretKey
                   name: {{ include "auth.fullname" . }}-aws
             - name: NEW_ACCOUNT_REPORT_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: new-account-report-queue-url
+                  key: newAccountReportQueueUrl
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_WALLET_CREATE_NOTIFICATION_QUEUE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: wallet-create-notification-queue-name
+                  key: walletCreateNotificationQueueName
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_WALLET_CREATE_NOTIFICATION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: wallet-create-notification-queue-url
+                  key: walletCreateNotificationQueueUrl
                   name: {{ include "auth.fullname" . }}-aws
             - name: NONCE_TEMPLATE
               valueFrom:
                 configMapKeyRef:
-                  key: nonce-template
+                  key: nonceTemplate
                   name: {{ include "auth.fullname" . }}-common
             - name: TOS_URL
               valueFrom:
                 configMapKeyRef:
-                  key: tos-url
+                  key: tosUrl
                   name: {{ include "auth.fullname" . }}-common
             - name: TOS_UPDATED
               valueFrom:
                 configMapKeyRef:
-                  key: tos-updated
+                  key: tosUpdated
                   name: {{ include "auth.fullname" . }}-common
             - name: IDENTITY_DANAL_API_BASE
               valueFrom:
                 configMapKeyRef:
-                  key: identity-danal-api-base
+                  key: identityDanalApiBase
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_DANAL_CPID
               valueFrom:
                 secretKeyRef:
-                  key: identity-danal-cpid
+                  key: identityDanalCPID
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_DANAL_CPPWD
               valueFrom:
                 secretKeyRef:
-                  key: identity-danal-cppwd
+                  key: identityDanalCPPWD
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_DANAL_TARGET_URL
               valueFrom:
                 configMapKeyRef:
-                  key: identity-danal-target-url
+                  key: identityDanalTargetUrl
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_USER_DANAL_TARGET_URL
               valueFrom:
                 configMapKeyRef:
-                  key: identity-user-danal-target-url
+                  key: identityUserDanalTargetUrl
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_RESET_PIN_DANAL_TARGET_URL
               valueFrom:
                 configMapKeyRef:
-                  key: identity-reset-pin-danal-target-url
+                  key: identityResetPinDanalTargetUrl
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_VALID_REDIRECT_URLS
               valueFrom:
                 secretKeyRef:
-                  key: identity-valid-redirect-urls
+                  key: identityValidRedirectUrls
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_OAUTH_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
-                  key: identity-oauth-client-id
+                  key: identityOauthClientId
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_ENCRYPT_KEY
               valueFrom:
                 secretKeyRef:
-                  key: identity-encrypt-key
+                  key: identityEncryptKey
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_HOME_PAGE
               valueFrom:
                 configMapKeyRef:
-                  key: identity-home-page
+                  key: identityHomePage
                   name: {{ include "auth.fullname" . }}-identity
             - name: SOCIAL_LOGIN_APPLE_APP_ID
               valueFrom:
                 secretKeyRef:
-                  key: social-login-apple-app-id
+                  key: socialLoginAppleAppId
                   name: {{ include "auth.fullname" . }}-social
             - name: WALLET_BACKEND_BASE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: wallet-backend-base-url
+                  key: walletBackendBaseUrl
                   name: {{ include "auth.fullname" . }}-common
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_PROFILING_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: ddProfilingEnabled
+                  name: {{ include "auth.fullname" . }}-datadog
+            - name: DD_LOGS_INJECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: ddLogsInjectionEnabled
+                  name: {{ include "auth.fullname" . }}-datadog
           ports:
             - name: http
               containerPort: 5000
@@ -224,6 +241,7 @@ metadata:
   name: {{ include "auth.fullname" . }}-worker
   labels:
     {{- include "auth.labels" . | nindent 4 }}
+    {{- include "auth.datadogLabels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -231,6 +249,7 @@ spec:
   selector:
     matchLabels:
       {{- include "auth.selectorLabels" . | nindent 6 }}
+      {{- include "auth.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -291,128 +310,142 @@ spec:
             - name: OAUTH2_TOKEN_EXPIRES_IN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: oauth2-token-expires-in-password
+                  key: oauth2TokenExpiresInPassword
                   name: {{ include "auth.fullname" . }}-oauth
             - name: OAUTH2_REFRESH_TOKEN_EXPIRES_IN
               valueFrom:
                 secretKeyRef:
-                  key: oauth2-refresh-token-expires-in
+                  key: oauth2RefreshTokenExpiresIn
                   name: {{ include "auth.fullname" . }}-oauth
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: secret-key
+                  key: secretKey
                   name: {{ include "auth.fullname" . }}-oauth
             - name: RESET_PIN_JWT_EXP
               valueFrom:
                 secretKeyRef:
-                  key: reset-pin-jwt-exp
+                  key: resetPinJwtExp
                   name: {{ include "auth.fullname" . }}-oauth
             - name: AWS_REGION
               valueFrom:
                 secretKeyRef:
-                  key: aws-region
+                  key: awsRegion
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_ACCESS_KEY
               valueFrom:
                secretKeyRef:
-                  key: aws-access-key
+                  key: awsAccessKey
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: aws-secret-key
+                  key: awsSecretKey
                   name: {{ include "auth.fullname" . }}-aws
             - name: NEW_ACCOUNT_REPORT_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: new-account-report-queue-url
+                  key: newAccountReportQueueUrl
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_WALLET_CREATE_NOTIFICATION_QUEUE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: wallet-create-notification-queue-name
+                  key: walletCreateNotificationQueueName
                   name: {{ include "auth.fullname" . }}-aws
             - name: AWS_WALLET_CREATE_NOTIFICATION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: wallet-create-notification-queue-url
+                  key: walletCreateNotificationQueueUrl
                   name: {{ include "auth.fullname" . }}-aws
             - name: NONCE_TEMPLATE
               valueFrom:
                 configMapKeyRef:
-                  key: nonce-template
+                  key: nonceTemplate
                   name: {{ include "auth.fullname" . }}-common
             - name: TOS_URL
               valueFrom:
                 configMapKeyRef:
-                  key: tos-url
+                  key: tosUrl
                   name: {{ include "auth.fullname" . }}-common
             - name: TOS_UPDATED
               valueFrom:
                 configMapKeyRef:
-                  key: tos-updated
+                  key: tosUpdated
                   name: {{ include "auth.fullname" . }}-common
             - name: IDENTITY_DANAL_API_BASE
               valueFrom:
                 configMapKeyRef:
-                  key: identity-danal-api-base
+                  key: identityDanalApiBase
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_DANAL_CPID
               valueFrom:
                 secretKeyRef:
-                  key: identity-danal-cpid
+                  key: identityDanalCPID
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_DANAL_CPPWD
               valueFrom:
                 secretKeyRef:
-                  key: identity-danal-cppwd
+                  key: identityDanalCPPWD
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_DANAL_TARGET_URL
               valueFrom:
                 configMapKeyRef:
-                  key: identity-danal-target-url
+                  key: identityDanalTargetUrl
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_USER_DANAL_TARGET_URL
               valueFrom:
                 configMapKeyRef:
-                  key: identity-user-danal-target-url
+                  key: identityUserDanalTargetUrl
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_RESET_PIN_DANAL_TARGET_URL
               valueFrom:
                 configMapKeyRef:
-                  key: identity-reset-pin-danal-target-url
+                  key: identityResetPinDanalTargetUrl
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_VALID_REDIRECT_URLS
               valueFrom:
                 configMapKeyRef:
-                  key: identity-valid-redirect-urls
+                  key: identityValidRedirectUrls
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_OAUTH_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
-                  key: identity-oauth-client-id
+                  key: identityOauthClientId
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_ENCRYPT_KEY
               valueFrom:
                 secretKeyRef:
-                  key: identity-encrypt-key
+                  key: identityEncryptKey
                   name: {{ include "auth.fullname" . }}-identity
             - name: IDENTITY_HOME_PAGE
               valueFrom:
                 configMapKeyRef:
-                  key: identity-home-page
+                  key: identityHomePage
                   name: {{ include "auth.fullname" . }}-identity
             - name: SOCIAL_LOGIN_APPLE_APP_ID
               valueFrom:
                 secretKeyRef:
-                  key: social-login-apple-app-id
+                  key: socialLoginAppleAppId
                   name: {{ include "auth.fullname" . }}-social
             - name: WALLET_BACKEND_BASE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: wallet-backend-base-url
+                  key: walletBackendBaseUrl
                   name: {{ include "auth.fullname" . }}-common
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_PROFILING_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: ddProfilingEnabled
+                  name: {{ include "auth.fullname" . }}-datadog
+            - name: DD_LOGS_INJECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: ddLogsInjectionEnabled
+                  name: {{ include "auth.fullname" . }}-datadog
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

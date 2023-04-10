@@ -18,8 +18,6 @@ config:
   awsAccessKeyId: ""
   awsSecretAccessKey: ""
   awsRegion: ""
-  ambHttpEndpoint: ""
-  ambWsEndpoint: ""
   alchemyApiKey: ""
   alchemyHttpEndpoint: ""
   alchemyWsEndpoint: ""
@@ -47,8 +45,12 @@ config:
   dbPassword: ""
   dbHost: ""
   dbUser: ""
+  datadog:
+    ddProfilingEnabled: "true"
+    ddLogsInjectionEnabled: "true"
 
-podAnnotations: {}
+podAnnotations:
+  - admission.datadoghq.com/js-lib.version: v3.16.0
 
 podSecurityContext:
   {}

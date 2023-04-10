@@ -3,11 +3,11 @@ kind: ConfigMap
 metadata:
   name: {{ include "payment.fullname" . }}-common
 data:
-  backend_host: {{ default "" .Values.config.backend.backend_host | quote }}
-  frontend_host: {{ default "" .Values.config.backend.frontend_host | quote }}
-  originals_host: {{ default "" .Values.config.backend.originals_host | quote }}
-  in_app_host: {{ default "" .Values.config.backend.in_app_host | quote }}
-  ethereum_network: {{ default "" .Values.config.backend.ethereum_network | quote }}
+  backendHost: {{ default "" .Values.config.backend.backendHost | quote }}
+  frontendHost: {{ default "" .Values.config.backend.frontendHost | quote }}
+  originalsHost: {{ default "" .Values.config.backend.originalsHost | quote }}
+  inAppHost: {{ default "" .Values.config.backend.inAppHost | quote }}
+  ethereumNetwork: {{ default "" .Values.config.backend.ethereumNetwork | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -20,3 +20,11 @@ data:
   rapidCrawlingItemQueueUrl: {{ default "" .Values.config.aws.queue.rapidCrawlingItemQueueUrl | quote }}
   rapidCrawlingRefreshItemMetaQueueName: {{ default "" .Values.config.aws.queue.rapidCrawlingRefreshItemMetaQueueName | quote }}
   rapidCrawlingRefreshItemMetaQueueUrl: {{ default "" .Values.config.aws.queue.rapidCrawlingRefreshItemMetaQueueUrl | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "payment.fullname" . }}-datadog
+data:
+  ddProfilingEnabled: {{ default "" .Values.config.datadog.ddProfilingEnabled | quote }}
+  ddLogsInjectionEnabled: {{ default "" .Values.config.datadog.ddLogsInjectionEnabled | quote }}

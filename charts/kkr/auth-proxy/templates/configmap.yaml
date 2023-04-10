@@ -4,8 +4,16 @@ metadata:
   name: {{ include "auth-proxy.fullname" . }}
   labels: {{- include "auth-proxy.labels" . | nindent 4 }}
 data:
-  oauth-client-id: {{ .Values.config.oauthClientId | default "" | quote }}
-  oauth-client-secret: {{ .Values.config.oauthClientSecret | default "" | quote }}
-  oauth-token-endpoint: {{ .Values.config.oauthTokenEndpoint | default "" | quote }}
-  get-nonce-endpoint: {{ .Values.config.getNonceEndpoint | default "" | quote }}
-  oauth-scope: {{ .Values.config.oauthScope | default "" | quote }}
+  oauthClientId: {{ .Values.config.oauthClientId | default "" | quote }}
+  oauthClientSecret: {{ .Values.config.oauthClientSecret | default "" | quote }}
+  oauthTokenEndpoint: {{ .Values.config.oauthTokenEndpoint | default "" | quote }}
+  getNonceEndpoint: {{ .Values.config.getNonceEndpoint | default "" | quote }}
+  oauthScope: {{ .Values.config.oauthScope | default "" | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "auth-proxy.fullname" . }}-datadog
+data:
+  ddProfilingEnabled: {{ default "" .Values.config.datadog.ddProfilingEnabled | quote }}
+  ddLogsInjectionEnabled: {{ default "" .Values.config.datadog.ddLogsInjectionEnabled | quote }}

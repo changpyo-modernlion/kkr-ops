@@ -4,15 +4,15 @@ metadata:
   name: {{ include "payment.fullname" . }}
   labels:
     {{- include "payment.labels" . | nindent 4 }}
+    {{- include "payment.datadogLabels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- else }}
-  replicas: 1
   {{- end }}
   selector:
     matchLabels:
       {{- include "payment.selectorLabels" . | nindent 6 }}
+      {{- include "payment.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,6 +21,7 @@ spec:
       {{- end }}
       labels:
         {{- include "payment.selectorLabels" . | nindent 8 }}
+        {{- include "payment.datadogSelectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -30,27 +31,27 @@ spec:
             - name: BACKEND_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: backend_host
+                  key: backendHost
                   name: {{ include "payment.fullname" . }}-common
             - name: FRONTEND_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: frontend_host
+                  key: frontendHost
                   name: {{ include "payment.fullname" . }}-common
             - name: ORIGINALS_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: originals_host
+                  key: originalsHost
                   name: {{ include "payment.fullname" . }}-common
             - name: INAPP_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: in_app_host
+                  key: inAppHost
                   name: {{ include "payment.fullname" . }}-common
             - name: ETHERS_NETWORK
               valueFrom:
                 configMapKeyRef:
-                  key: ethereum_network
+                  key: ethereumNetwork
                   name: {{ include "payment.fullname" . }}-common
             - name: RAPID_CRAWLING_COLLECTION_QUEUE_NAME
               valueFrom:
@@ -85,7 +86,7 @@ spec:
             - name: HECTO_HASH_SECRET
               valueFrom:
                 secretKeyRef:
-                  key: hash_secret
+                  key: hashSecret
                   name: {{ include "payment.fullname" . }}-hecto
             - name: HECTO_MID
               valueFrom:
@@ -95,27 +96,27 @@ spec:
             - name: HECTO_NET_PAY_CANCLE
               valueFrom:
                 secretKeyRef:
-                  key: net_pay_cancle
+                  key: netPayCancle
                   name: {{ include "payment.fullname" . }}-hecto
             - name: HECTO_PAYMENT_INFO
               valueFrom:
                 secretKeyRef:
-                  key: payment_info
+                  key: paymentInfo
                   name: {{ include "payment.fullname" . }}-hecto
             - name: HECTO_PAY_CANCLE
               valueFrom:
                 secretKeyRef:
-                  key: pay_cancle
+                  key: payCancle
                   name: {{ include "payment.fullname" . }}-hecto
             - name: HECTO_PAY_APPROVE
               valueFrom:
                 secretKeyRef:
-                  key: pay_approve
+                  key: payApprove
                   name: {{ include "payment.fullname" . }}-hecto
             - name: HECTO_TR_INFO
               valueFrom:
                 secretKeyRef:
-                  key: tr_info
+                  key: trInfo
                   name: {{ include "payment.fullname" . }}-hecto
             - name: DB_HOST
               valueFrom:
@@ -150,12 +151,12 @@ spec:
             - name: DB_POOL_SIZE
               valueFrom:
                 secretKeyRef:
-                  key: pool_size
+                  key: poolSize
                   name: {{ include "payment.fullname" . }}-database
             - name: ETHERS_ALCHEMY_KEY
               valueFrom:
                 secretKeyRef:
-                  key: api_key
+                  key: apiKey
                   name: {{ include "payment.fullname" . }}-alchemy
             - name: AWS_REGION
               valueFrom:
@@ -165,13 +166,27 @@ spec:
             - name: AWS_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  key: access_key
+                  key: accessKey
                   name: {{ include "payment.fullname" . }}-aws-credentials
             - name: AWS_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  key: secret_key
+                  key: secretKey
                   name: {{ include "payment.fullname" . }}-aws-credentials
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_PROFILING_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: ddProfilingEnabled
+                  name: {{ include "payment.fullname" . }}-datadog
+            - name: DD_LOGS_INJECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: ddLogsInjectionEnabled
+                  name: {{ include "payment.fullname" . }}-datadog
           ports:
             - name: http
               containerPort: 3000

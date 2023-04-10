@@ -28,6 +28,10 @@ config:
     cliendId: "client_id"
     clientSecret: "client_secret"
     tokenIntrospectUrl: ""
+  datadog:
+    ddProfilingEnabled: "true"
+    ddLogsInjectionEnabled: "true"
+
 secret:
   db:
     host: ""
@@ -63,8 +67,8 @@ secret:
     apiKey: ""
     host: ""
 
-
-podAnnotations: {}
+podAnnotations:
+  - admission.datadoghq.com/js-lib.version: v3.16.0
 
 podSecurityContext: {}
   # fsGroup: 2000

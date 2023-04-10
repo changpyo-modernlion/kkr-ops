@@ -1,34 +1,39 @@
 apiVersion: v1
 data:
-  web3-provider: {{ default "" .Values.config.web3Provider | quote }}
-  alchemy-api-key: {{ default "" .Values.config.alchemyApiKey | quote }}
-  alchemy-http-endpoint: {{ default "" .Values.config.alchemyHttpEndpoint | quote }}
-  alchemy-ws-endpoint: {{ default "" .Values.config.alchemyWsEndpoint | quote }}
-  aws-access-key-id: {{ default "" .Values.config.awsAccessKeyId | quote }}
-  aws-secret-access-key: {{ default "" .Values.config.awsSecretAccessKey | quote }}
-  aws-region: {{ default "" .Values.config.awsRegion  | quote }}
-  amb-http-endpoint: {{ default "" .Values.config.ambHttpEndpoint | quote }}
-  amb-ws-endpoint: {{ default "" .Values.config.ambWsEndpoint | quote }}
-  chain-id: {{ default "" .Values.config.chainId | quote }}
-  order-contract-address: {{ default "" .Values.config.orderContractAddress | quote }}
-  whitelist-contract-addresses: {{ default "" .Values.config.whitelistContractAddresses | quote }}
-  exchange-contract-address: {{ default "" .Values.config.exchangeContractAddress | quote }}
-  new-block-headers-queue-url: {{ default "" .Values.config.newBlockHeadersQueueUrl | quote }}
-  nft-transfer-event-queue-url: {{ default "" .Values.config.nftTransferEventQueueUrl | quote }}
-  order-cancelled-event-queue-url: {{ default "" .Values.config.orderCancelledEventQueueUrl | quote }}
-  order-fulfilled-event-queue-url: {{ default "" .Values.config.orderFulfilledEventQueueUrl | quote }}
-  ownership-transferred-event-queue-url: {{ default "" .Values.config.ownershipTransferredEventQueueUrl | quote }}
-  exchange-event-queue-url: {{ default "" .Values.config.exchangeEventQueueUrl | quote }}
-  order-cancelled-event-retry-count: {{ default "" .Values.config.orderCancelledEventRetryCount | quote }}
-  order-fulfilled-event-retry-count: {{ default "" .Values.config.orderFulfilledEventRetryCount | quote }}
-  db-engine: {{ default "" .Values.config.dbEngine | quote }}
-  db-port: {{ default "" .Values.config.dbPort | quote }}
-  db-database: {{ default "" .Values.config.dbDatabase | quote }}
-  db-password: {{ default "" .Values.config.dbPassword | quote }}
-  db-host: {{ default "" .Values.config.dbHost | quote }}
-  db-user: {{ default "" .Values.config.dbUser | quote }}
+  web3Provider: {{ default "" .Values.config.web3Provider | quote }}
+  alchemyApiKey: {{ default "" .Values.config.alchemyApiKey | quote }}
+  alchemyHttpEndpoint: {{ default "" .Values.config.alchemyHttpEndpoint | quote }}
+  alchemyWsEndpoint: {{ default "" .Values.config.alchemyWsEndpoint | quote }}
+  awsAccessKeyId: {{ default "" .Values.config.awsAccessKeyId | quote }}
+  awsSecretAccessKey: {{ default "" .Values.config.awsSecretAccessKey | quote }}
+  awsRegion: {{ default "" .Values.config.awsRegion  | quote }}
+  chainId: {{ default "" .Values.config.chainId | quote }}
+  orderContractAddress: {{ default "" .Values.config.orderContractAddress | quote }}
+  whitelistContractAddresses: {{ default "" .Values.config.whitelistContractAddresses | quote }}
+  exchangeContractAddress: {{ default "" .Values.config.exchangeContractAddress | quote }}
+  newBlockHeadersQueueUrl: {{ default "" .Values.config.newBlockHeadersQueueUrl | quote }}
+  nftTransferEventQueueUrl: {{ default "" .Values.config.nftTransferEventQueueUrl | quote }}
+  orderCancelledEventQueueUrl: {{ default "" .Values.config.orderCancelledEventQueueUrl | quote }}
+  orderFulfilledEventQueueUrl: {{ default "" .Values.config.orderFulfilledEventQueueUrl | quote }}
+  ownershipTransferredEventQueueUrl: {{ default "" .Values.config.ownershipTransferredEventQueueUrl | quote }}
+  exchangeEventQueueUrl: {{ default "" .Values.config.exchangeEventQueueUrl | quote }}
+  orderCancelledEventRetryCount: {{ default "" .Values.config.orderCancelledEventRetryCount | quote }}
+  orderFulfilledEventRetryCount: {{ default "" .Values.config.orderFulfilledEventRetryCount | quote }}
+  dbEngine: {{ default "" .Values.config.dbEngine | quote }}
+  dbPort: {{ default "" .Values.config.dbPort | quote }}
+  dbDatabase: {{ default "" .Values.config.dbDatabase | quote }}
+  dbPassword: {{ default "" .Values.config.dbPassword | quote }}
+  dbHost: {{ default "" .Values.config.dbHost | quote }}
+  dbUser: {{ default "" .Values.config.dbUser | quote }}
 
 kind: ConfigMap
 metadata:
   name: {{ include "event-listener.fullname" . }}
-
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "event-listener.fullname" . }}-datadog
+data:
+  ddProfilingEnabled: {{ default "" .Values.config.datadog.ddProfilingEnabled | quote }}
+  ddLogsInjectionEnabled: {{ default "" .Values.config.datadog.ddLogsInjectionEnabled | quote }}

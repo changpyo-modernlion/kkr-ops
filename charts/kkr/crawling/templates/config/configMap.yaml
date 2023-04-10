@@ -3,12 +3,12 @@ kind: ConfigMap
 metadata:
   name: {{ include "crawling.fullname" . }}-config
 data:
-  ethreum_network: {{ default "" .Values.config.crawling.ethreum_network | quote }}
-  marketplace_address: {{ default "" .Values.config.crawling.marketplace_address | quote }}
-  marketplace_nft_address: {{ default "" .Values.config.crawling.marketplace_nft_address | quote }}
-  network_provider: {{ default "" .Values.config.crawling.network_provider | quote }}
-  ipfs_host: {{ default "" .Values.config.crawling.ipfs_host | quote }}
-  refresh_meta_timeout: {{ default "" .Values.config.crawling.refresh_meta_timeout | quote }}
+  ethreumNetwork: {{ default "" .Values.config.crawling.ethreumNetwork | quote }}
+  marketplaceAddress: {{ default "" .Values.config.crawling.marketplaceAddress | quote }}
+  marketplaceNftAddress: {{ default "" .Values.config.crawling.marketplaceNftAddress | quote }}
+  networkProvider: {{ default "" .Values.config.crawling.networkProvider | quote }}
+  ipfsHost: {{ default "" .Values.config.crawling.ipfsHost | quote }}
+  refreshMetaTimeout: {{ default "" .Values.config.crawling.refreshMetaTimeout | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -23,13 +23,13 @@ metadata:
   name: {{ include "crawling.fullname" . }}-consumer-queue
 data:
   collection: {{ default "" .Values.config.queue.consumer.collection | quote }}
-  all_item: {{ default "" .Values.config.queue.consumer.all_item | quote }}
+  allItem: {{ default "" .Values.config.queue.consumer.allItem | quote }}
   item: {{ default "" .Values.config.queue.consumer.item | quote }}
-  collection_tx: {{ default "" .Values.config.queue.consumer.collection_tx | quote }}
-  item_tx: {{ default "" .Values.config.queue.consumer.item_tx | quote }}
-  new_account_address: {{ default "" .Values.config.queue.consumer.new_account_address | quote }}
-  refresh_item_meta: {{ default "" .Values.config.queue.consumer.refresh_item_meta | quote }}
-  exchange_event: {{ default "" .Values.config.queue.consumer.exchange_event | quote }}
+  collectionTx: {{ default "" .Values.config.queue.consumer.collectionTx | quote }}
+  itemTx: {{ default "" .Values.config.queue.consumer.itemTx | quote }}
+  newAccountAddress: {{ default "" .Values.config.queue.consumer.newAccountAddress | quote }}
+  refreshItemMeta: {{ default "" .Values.config.queue.consumer.refreshItemMeta | quote }}
+  exchangeEvent: {{ default "" .Values.config.queue.consumer.exchangeEvent | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -37,17 +37,25 @@ metadata:
   name: {{ include "crawling.fullname" . }}-producer-queue
 data:
   collection: {{ default "" .Values.config.queue.producer.collection | quote }}
-  all_item: {{ default "" .Values.config.queue.producer.all_item | quote }}
+  allItem: {{ default "" .Values.config.queue.producer.allItem | quote }}
   item: {{ default "" .Values.config.queue.producer.item | quote }}
-  collection_tx: {{ default "" .Values.config.queue.producer.collection_tx | quote }}
-  item_tx: {{ default "" .Values.config.queue.producer.item_tx | quote }}
-  new_account_address: {{ default "" .Values.config.queue.producer.new_account_address | quote }}
-  refresh_item_meta: {{ default "" .Values.config.queue.producer.refresh_item_meta | quote }}
+  collectionTx: {{ default "" .Values.config.queue.producer.collectionTx | quote }}
+  itemTx: {{ default "" .Values.config.queue.producer.itemTx | quote }}
+  newAccountAddress: {{ default "" .Values.config.queue.producer.newAccountAddress | quote }}
+  refreshItemMeta: {{ default "" .Values.config.queue.producer.refreshItemMeta | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "crawling.fullname" . }}-s3
 data:
-  bucket_collection: {{ default "" .Values.config.s3.bucket_collection | quote }}
-  bucket_item: {{ default "" .Values.config.s3.bucket_item | quote }}
+  bucketCollection: {{ default "" .Values.config.s3.bucketCollection | quote }}
+  bucketItem: {{ default "" .Values.config.s3.bucketItem | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "crawling.fullname" . }}-datadog
+data:
+  ddProfilingEnabled: {{ default "" .Values.config.datadog.ddProfilingEnabled | quote }}
+  ddLogsInjectionEnabled: {{ default "" .Values.config.datadog.ddLogsInjectionEnabled | quote }}

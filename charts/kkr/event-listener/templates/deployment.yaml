@@ -4,6 +4,7 @@ metadata:
   name: {{ include "event-listener.fullname" . }}
   labels:
     {{- include "event-listener.labels" . | nindent 4 }}
+    {{- include "event-listener.datadogLabels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -11,6 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "event-listener.selectorLabels" . | nindent 6 }}
+      {{- include "event-listener.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +21,7 @@ spec:
       {{- end }}
       labels:
         {{- include "event-listener.selectorLabels" . | nindent 8 }}
+        {{- include "event-listener.datadogSelectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -36,143 +39,147 @@ spec:
             - name: ORDER_CONTRACT_ADDRESS
               valueFrom:
                 configMapKeyRef:
-                  key: order-contract-address
+                  key: orderContractAddress
                   name: {{ include "event-listener.fullname" . }}
             - name: WHITELIST_CONTRACT_ADDRESS
               valueFrom:
                 configMapKeyRef:
-                  key: whitelist-contract-addresses
+                  key: whitelistContractAddresses
                   name: {{ include "event-listener.fullname" . }}
             - name: EXCHANGE_CONTRACT_ADDRESS
               valueFrom:
                 configMapKeyRef:
-                  key: exchange-contract-address
+                  key: exchangeContractAddress
                   name: {{ include "event-listener.fullname" . }}
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 configMapKeyRef:
-                  key: aws-access-key-id
+                  key: awsAccessKeyId
                   name: {{ include "event-listener.fullname" . }}
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 configMapKeyRef:
-                  key: aws-secret-access-key
+                  key: awsSecretAccessKey
                   name: {{ include "event-listener.fullname" . }}
             - name: AWS_DEFAULT_REGION
               valueFrom:
                 configMapKeyRef:
-                  key: aws-region
+                  key: awsRegion
                   name: {{ include "event-listener.fullname" . }}
             - name: CHAIN_ID
               valueFrom:
                 configMapKeyRef:
-                  key: chain-id
+                  key: chainId
                   name: {{ include "event-listener.fullname" . }}
             - name: WEB3_PROVIDER
               valueFrom:
                 configMapKeyRef:
-                  key: web3-provider
+                  key: web3Provider
                   name: {{ include "event-listener.fullname" . }}
             - name: ALCHEMY_API_KEY
               valueFrom:
                 configMapKeyRef:
-                  key: alchemy-api-key
+                  key: alchemyApiKey
                   name: {{ include "event-listener.fullname" . }}
             - name: ALCHEMY_HTTP_ENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  key: alchemy-http-endpoint
+                  key: alchemyHttpEndpoint
                   name: {{ include "event-listener.fullname" . }}
             - name: ALCHEMY_WS_ENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  key: alchemy-ws-endpoint
-                  name: {{ include "event-listener.fullname" . }}
-            - name: AMB_HTTP_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  key: amb-http-endpoint
-                  name: {{ include "event-listener.fullname" . }}
-            - name: AMB_WS_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  key: amb-ws-endpoint
+                  key: alchemyWsEndpoint
                   name: {{ include "event-listener.fullname" . }}
             - name: AWS_REGION
               valueFrom:
                 configMapKeyRef:
-                  key: aws-region
+                  key: awsRegion
                   name: {{ include "event-listener.fullname" . }}
             - name: NEW_BLOCK_HEADERS_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: new-block-headers-queue-url
+                  key: newBlockHeadersQueueUrl
                   name: {{ include "event-listener.fullname" . }}
             - name: NFT_TRANSFER_EVENT_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: nft-transfer-event-queue-url
+                  key: nftTransferEventQueueUrl
                   name: {{ include "event-listener.fullname" . }}
             - name: ORDER_CANCELLED_EVENT_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: order-cancelled-event-queue-url
+                  key: orderCancelledEventQueueUrl
                   name: {{ include "event-listener.fullname" . }}
             - name: ORDER_FULFILLED_EVENT_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: order-fulfilled-event-queue-url
+                  key: orderFulfilledEventQueueUrl
                   name: {{ include "event-listener.fullname" . }}
             - name: OWNERSHIP_TRANSFERRED_EVENT_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: ownership-transferred-event-queue-url
+                  key: ownershipTransferredEventQueueUrl
                   name: {{ include "event-listener.fullname" . }}
             - name: EXCHANGE_EVENT_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: exchange-event-queue-url
+                  key: exchangeEventQueueUrl
                   name: {{ include "event-listener.fullname" . }}
             - name: ORDER_CANCELLED_EVENT_RETRY_COUNT
               valueFrom:
                 configMapKeyRef:
-                  key: order-cancelled-event-retry-count
+                  key: orderCancelledEventRetryCount
                   name: {{ include "event-listener.fullname" . }}
             - name: ORDER_FULFILLED_EVENT_RETRY_COUNT
               valueFrom:
                 configMapKeyRef:
-                  key: order-fulfilled-event-retry-count
+                  key: orderFulfilledEventRetryCount
                   name: {{ include "event-listener.fullname" . }}
             - name: DB_ENGINE
               valueFrom:
                 configMapKeyRef:
-                  key: db-engine
+                  key: dbEngine
                   name: {{ include "event-listener.fullname" . }}
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  key: db-port
+                  key: dbPort
                   name: {{ include "event-listener.fullname" . }}
             - name: DB_DATABASE
               valueFrom:
                 configMapKeyRef:
-                  key: db-database
+                  key: dbDatabase
                   name: {{ include "event-listener.fullname" . }}
             - name: DB_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  key: db-password
+                  key: dbPassword
                   name: {{ include "event-listener.fullname" . }}
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: db-host
+                  key: dbHost
                   name: {{ include "event-listener.fullname" . }}
             - name: DB_USER
               valueFrom:
                 configMapKeyRef:
-                  key: db-user
+                  key: dbUser
                   name: {{ include "event-listener.fullname" . }}
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_PROFILING_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: ddProfilingEnabled
+                  name: {{ include "event-listener.fullname" . }}-datadog
+            - name: DD_LOGS_INJECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: ddLogsInjectionEnabled
+                  name: {{ include "event-listener.fullname" . }}-datadog
           ports:
             - name: http
               containerPort: 3000

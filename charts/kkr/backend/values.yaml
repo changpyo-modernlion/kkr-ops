@@ -37,29 +37,32 @@ config:
       s3KeyMainImage: ""
       s3KeyBackgroundImage: ""
   backend:
-    ethreum_network: ""
-    marketplace_nft_address: ""
-    network_provider: ""
-    account_api_base_url: ""
-    chain_id: ""
-    payment_host: ""
-    originals_host: ""
-  contract_address:
+    ethreumNetwork: ""
+    marketplaceNftAddress: ""
+    networkProvider: ""
+    accountApiBaseUrl: ""
+    chainId: ""
+    paymentHost: ""
+    originalsHost: ""
+  contractAddress:
     weth: ""
     usdc: ""
     market: ""
-  event_listener_host: ""
+  eventListenerHost: ""
   oauth:
-    client_id: "client_id"
-    client_secret: "client_secret"
-    token_introspect_url: "http://auth.test-seokjae/oauth/token/introspec"
+    clientId: "client_id"
+    clientSecret: "client_secret"
+    tokenIntrospectUrl: "http://auth.test-seokjae/oauth/token/introspec"
+  datadog:
+    ddProfilingEnabled: "true"
+    ddLogsInjectionEnabled: "true"
 
 secret:
   alchemy:
     host: ""
-    api_key: ""
+    apiKey: ""
   opensea:
-    api_key: ""
+    apiKey: ""
   database:
     host: ""
     engine: ""
@@ -69,8 +72,8 @@ secret:
     user: ""
   aws:
     region: ""
-    access_key: ""
-    secret_key: ""
+    accessKey: ""
+    secretKey: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -81,7 +84,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  - admission.datadoghq.com/js-lib.version: v3.16.0
 
 podSecurityContext:
   {}
