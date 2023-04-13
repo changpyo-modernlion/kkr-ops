@@ -50,6 +50,7 @@ data:
   marketplace: {{ default "" .Values.config.contractAddress.market | quote }}
   weth: {{ default "" .Values.config.contractAddress.weth | quote }}
   usdc: {{ default "" .Values.config.contractAddress.usdc | quote }}
+  wmatic: {{ default "" .Values.config.contractAddress.wmatic | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

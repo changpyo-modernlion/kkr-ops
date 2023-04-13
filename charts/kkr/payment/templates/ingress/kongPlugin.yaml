@@ -11,8 +11,8 @@ plugin: cors
 ---
 apiVersion: configuration.konghq.com/v1
 config:
-  auth_method: client_secret_basic
-  auth_response_headers_to_forward:
+  authMethod: client_secret_basic
+  authResponseHeadersToForward:
   - sub
   - current-address
   client_id: {{ default "" .Values.config.oauth.client_id | quote }}

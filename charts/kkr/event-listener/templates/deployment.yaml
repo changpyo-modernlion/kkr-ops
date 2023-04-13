@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       {{- include "event-listener.selectorLabels" . | nindent 6 }}
-      {{- include "event-listener.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -126,6 +125,11 @@ spec:
                 configMapKeyRef:
                   key: exchangeEventQueueUrl
                   name: {{ include "event-listener.fullname" . }}
+            - name: PAST_EVENT_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: pastEventQueueUrl
+                  name: {{ include "event-listener.fullname" . }}
             - name: ORDER_CANCELLED_EVENT_RETRY_COUNT
               valueFrom:
                 configMapKeyRef:
@@ -135,6 +139,11 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: orderFulfilledEventRetryCount
+                  name: {{ include "event-listener.fullname" . }}
+            - name: BLOCK_NUMBER_TABLE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: blockNumberTableName
                   name: {{ include "event-listener.fullname" . }}
             - name: DB_ENGINE
               valueFrom:

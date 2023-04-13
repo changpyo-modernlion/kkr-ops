@@ -19,9 +19,9 @@ config:
     ethereumBackendHost: ""
     polygonBackendHost: ""
   oauth:
-    client_id: "client_id"
-    client_secret: "client_secret"
-    token_introspect_url: "http://auth.test-seokjae/oauth/token/introspec"
+    clientId: "clientId"
+    clientSecret: "clientSecret"
+    tokenIntrospectUrl: "http://auth.test-seokjae/oauth/token/introspec"
   datadog:
     ddProfilingEnabled: "true"
     ddLogsInjectionEnabled: "true"

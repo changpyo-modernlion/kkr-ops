@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       {{- include "backend.selectorLabels" . | nindent 6 }}
-      {{- include "backend.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -137,6 +136,11 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: usdc
+                  name: {{ include "backend.fullname" . }}-contract
+            - name: WMATIC_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: wmatic
                   name: {{ include "backend.fullname" . }}-contract
             - name: COLLECTION_QUEUE_NAME
               valueFrom:

@@ -17,8 +17,10 @@ data:
   orderFulfilledEventQueueUrl: {{ default "" .Values.config.orderFulfilledEventQueueUrl | quote }}
   ownershipTransferredEventQueueUrl: {{ default "" .Values.config.ownershipTransferredEventQueueUrl | quote }}
   exchangeEventQueueUrl: {{ default "" .Values.config.exchangeEventQueueUrl | quote }}
+  pastEventQueueUrl: {{ default "" .Values.config.pastEventQueueUrl | quote }}
   orderCancelledEventRetryCount: {{ default "" .Values.config.orderCancelledEventRetryCount | quote }}
   orderFulfilledEventRetryCount: {{ default "" .Values.config.orderFulfilledEventRetryCount | quote }}
+  blockNumberTableName: {{ default "" .Values.config.blockNumberTableName | quote }}
   dbEngine: {{ default "" .Values.config.dbEngine | quote }}
   dbPort: {{ default "" .Values.config.dbPort | quote }}
   dbDatabase: {{ default "" .Values.config.dbDatabase | quote }}

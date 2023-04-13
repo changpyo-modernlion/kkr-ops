@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       {{- include "payment.selectorLabels" . | nindent 6 }}
-      {{- include "payment.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}

@@ -10,13 +10,13 @@ plugin: cors
 ---
 apiVersion: configuration.konghq.com/v1
 config:
-  auth_method: client_secret_basic
-  auth_response_headers_to_forward:
+  authMethod: client_secret_basic
+  authResponseHeadersToForward:
   - sub
   - current-address
-  client_id: {{ default "" .Values.config.oauth.clientId | quote }}
-  client_secret: {{ default "" .Values.config.oauth.clientSecret | quote }}
-  token_introspect_url: {{ default "" .Values.config.oauth.tokenIntrospectUrl | quote }}
+  clientId: {{ default "" .Values.config.oauth.clientId | quote }}
+  clientSecret: {{ default "" .Values.config.oauth.clientSecret | quote }}
+  tokenIntrospectUrl: {{ default "" .Values.config.oauth.tokenIntrospectUrl | quote }}
 
 kind: KongPlugin
 metadata:

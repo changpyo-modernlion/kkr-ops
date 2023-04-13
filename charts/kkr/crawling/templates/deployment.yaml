@@ -10,7 +10,6 @@ spec:
   selector:
     matchLabels:
       {{- include "crawling.selectorLabels" . | nindent 6 }}
-      {{- include "crawling.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}

@@ -12,7 +12,6 @@ spec:
   selector:
     matchLabels:
       {{- include "auth-proxy.selectorLabels" . | nindent 6 }}
-      {{- include "auth-proxy.datadogSelectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}

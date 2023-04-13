@@ -21,6 +21,10 @@ config:
   provider:
     ethereumProviderUrl: ""
     polygonProviderUrl: ""
+  oauth:
+    clientId: "test"
+    clientSecret: "secret"
+    tokenIntrospectUrl: "http://goerli-alpha-auth.goerli-alpha/oauth/token/introspect"
 secret:
   db:
     host: ""
