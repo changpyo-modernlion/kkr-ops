@@ -30,7 +30,7 @@ config:
     ddLogsInjectionEnabled: "true"
 
 podAnnotations:
-  - admission.datadoghq.com/js-lib.version: v3.16.0
+  admission.datadoghq.com/js-lib.version: v3.16.0
 
 podSecurityContext:
   {}
