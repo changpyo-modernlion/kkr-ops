@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "strapi.fullname" . }}
+  labels:
+    {{- include "strapi.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "strapi.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "strapi.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "strapi.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: DB_CLIENT
+            valueFrom:
+              secretKeyRef:
+                key: engine
+                name: {{ include "strapi.secretNameForDB" . }}
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                key: host
+                name: {{ include "strapi.secretNameForDB" . }}
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                key: port
+                name: {{ include "strapi.secretNameForDB" . }}
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                key: database
+                name: {{ include "strapi.secretNameForDB" . }}
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: user
+                name: {{ include "strapi.secretNameForDB" . }}
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: {{ include "strapi.secretNameForDB" . }}
+          - name: DB_SSL
+            value: "false"
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                key: accessKey
+                name: {{ include "strapi.secretNameForAWS" . }}
+          - name: AWS_ACCESS_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: accessSecret
+                name: {{ include "strapi.secretNameForAWS" . }}
+          - name: AWS_REGION
+            valueFrom:
+              secretKeyRef:
+                key: region
+                name: {{ include "strapi.secretNameForAWS" . }}
+          - name: AWS_BUCKET_NAME
+            valueFrom:
+              configMapKeyRef:
+                key: bucketName
+                name: {{ include "strapi.configMapNameForCommon" . }}
+          ports:
+            - name: http
+              containerPort: 1337
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
