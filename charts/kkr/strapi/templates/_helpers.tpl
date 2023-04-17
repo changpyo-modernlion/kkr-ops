@@ -51,17 +51,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
-*/}}
-{{- define "strapi.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "strapi.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
 데이터베이스 정보 저장 시크릿
 */}}
 {{- define "strapi.secretNameForDB" -}}
