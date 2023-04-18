@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "admin-wallet-worker.fullname" . }}
+  labels:
+    {{- include "admin-wallet-worker.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "admin-wallet-worker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "admin-wallet-worker.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  key: awsRegion
+                  name: {{ include "admin-wallet-worker.fullname" . }}-aws
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: awsAccessKey
+                  name: {{ include "admin-wallet-worker.fullname" . }}-aws
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: awsSecretKey
+                  name: {{ include "admin-wallet-worker.fullname" . }}-aws
+            - name: AWS_ADMIN_WALLET_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: awsAdminWalletQueueName
+                  name: {{ include "admin-wallet-worker.fullname" . }}-aws
+            - name: AWS_ADMIN_WALLET_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: awsAdminWalletQueueUrl
+                  name: {{ include "admin-wallet-worker.fullname" . }}-aws
+            - name: ETHEREUM_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: ethereumProviderUrl
+                  name: {{ include "admin-wallet-worker.fullname" . }}-provider
+            - name: POLYGON_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: polygonProviderUrl
+                  name: {{ include "admin-wallet-worker.fullname" . }}-provider
+            - name: ADMIN_WALLET_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: adminWalletApiUrl
+                  name: {{ include "admin-wallet-worker.fullname" . }}-api
+          ports:
+            - name: http
+              containerPort: 4000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /worker/v1/admin/wallet/health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /worker/v1/admin/wallet/health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

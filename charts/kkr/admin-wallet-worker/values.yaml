@@ -1,0 +1,34 @@
+# Default values for admin-wallet-worker.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: 293315485843.dkr.ecr.ap-northeast-2.amazonaws.com/kkr/admin-wallet-worker
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+config:
+  aws:
+    adminWalletQueueName: ""
+    adminWalletQueueUrl: ""
+  provider:
+    ethereumProviderUrl: ""
+    polygonProviderUrl: ""
+  api:
+    adminWalletApiUrl: ""
+
+secret:
+  aws:
+    credentials:
+      region: ""
+      accessKey: ""
+      secretKey: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
