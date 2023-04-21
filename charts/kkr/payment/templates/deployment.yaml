@@ -117,6 +117,16 @@ spec:
                 secretKeyRef:
                   key: trInfo
                   name: {{ include "payment.fullname" . }}-hecto
+            - name: BLUE_WALNUT_MID
+              valueFrom:
+                secretKeyRef:
+                  key: mid
+                  name: {{ include "payment.fullname" . }}-blue-walnut
+            - name: BLUE_WALNUT_MERCHANT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: merchantKey
+                  name: {{ include "payment.fullname" . }}-blue-walnut
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
