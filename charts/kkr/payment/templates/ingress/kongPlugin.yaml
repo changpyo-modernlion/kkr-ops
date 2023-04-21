@@ -15,9 +15,9 @@ config:
   auth_response_headers_to_forward:
   - sub
   - current-address
-  client_id: {{ default "" .Values.config.oauth.client_id | quote }}
-  client_secret: {{ default "" .Values.config.oauth.client_secret | quote }}
-  token_introspect_url: {{ default "" .Values.config.oauth.token_introspect_url | quote }}
+  client_id: {{ default "" .Values.config.oauth.clientId | quote }}
+  client_secret: {{ default "" .Values.config.oauth.clientSecret | quote }}
+  token_introspect_url: {{ default "" .Values.config.oauth.tokenIntrospectUrl | quote }}
 kind: KongPlugin
 metadata:
   name: {{ include "payment.validateAuthServerToken" . }}

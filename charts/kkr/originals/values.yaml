@@ -85,7 +85,7 @@ ingress:
         - api.abc.com
       secretName: secretName
 
-  swagger: 
+  swagger:
     enabled: false
 
 resources:
