@@ -100,6 +100,16 @@ spec:
                 configMapKeyRef:
                   key: exchangeEvent
                   name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_ORDER_CANCELLED
+              valueFrom:
+                configMapKeyRef:
+                  key: orderCancelled
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
+            - name: CONSUMER_QUEUE_ORDER_FULFILLED
+              valueFrom:
+                configMapKeyRef:
+                  key: orderFulfilled
+                  name: {{ include "crawling.fullname" . }}-consumer-queue
             - name: PRODUCER_QUEUE_COLLECTION
               valueFrom:
                 configMapKeyRef:
@@ -254,6 +264,11 @@ spec:
                 configMapKeyRef:
                   key: ddLogsInjectionEnabled
                   name: {{ include "crawling.fullname" . }}-datadog
+            - name: BACKEND_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: backend
+                  name: {{ include "crawling.fullname" . }}-hosts
           ports:
             - name: http
               containerPort: 3000

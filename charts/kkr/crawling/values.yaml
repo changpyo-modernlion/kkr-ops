@@ -11,6 +11,8 @@ image:
   tag: ""
 
 config:
+  hosts:
+    backend: ""
   crawling:
     ethreumNetwork: ""
     marketplaceAddress: ""
@@ -29,6 +31,8 @@ config:
       new_accountAddress: ""
       refreshItemMeta: ""
       exchangeEvent: ""
+      orderCancelled: ""
+      orderFulfilled: ""
     producer:
       collection: ""
       item: ""

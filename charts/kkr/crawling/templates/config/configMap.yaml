@@ -20,6 +20,13 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: {{ include "crawling.fullname" . }}-hosts
+data:
+  backend: {{ default "" .Values.config.hosts.backend | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: {{ include "crawling.fullname" . }}-consumer-queue
 data:
   collection: {{ default "" .Values.config.queue.consumer.collection | quote }}
@@ -30,6 +37,8 @@ data:
   newAccountAddress: {{ default "" .Values.config.queue.consumer.newAccountAddress | quote }}
   refreshItemMeta: {{ default "" .Values.config.queue.consumer.refreshItemMeta | quote }}
   exchangeEvent: {{ default "" .Values.config.queue.consumer.exchangeEvent | quote }}
+  orderCancelled: {{ default "" .Values.config.queue.consumer.orderCancelled | quote }}
+  orderFulfilled: {{ default "" .Values.config.queue.consumer.orderFulfilled | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
