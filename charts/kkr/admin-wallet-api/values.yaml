@@ -8,9 +8,9 @@ image:
   repository: 293315485843.dkr.ecr.ap-northeast-2.amazonaws.com/kkr/admin-wallet-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.3-96bbd7f-0"
+  tag: ""
 
-imagePullSecrets: [ ]
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -49,14 +49,20 @@ secret:
     childAdminAddress: ""
     contractAddress: ""
     minterContractAddress: ""
+  buwoo:
+    walletNumber: ""
+    apiToken: ""
+    childAdminAddress: ""
+    contractAddress: ""
+    minterContractAddress: ""
 
+podAnnotations: {}
 
-podAnnotations: { }
-
-podSecurityContext: { }
+podSecurityContext: {}
 # fsGroup: 2000
 
-securityContext: { }
+securityContext:
+  {}
   # capabilities:
   #   drop:
 #   - ALL
@@ -87,7 +93,8 @@ ingress:
   swagger:
     enabled: false
 
-resources: { }
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -106,8 +113,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: { }
+nodeSelector: {}
 
-tolerations: [ ]
+tolerations: []
 
-affinity: { }
+affinity: {}

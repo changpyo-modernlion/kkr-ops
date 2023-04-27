@@ -148,6 +148,31 @@ spec:
                 secretKeyRef:
                   key: lvcMinterContractAddress
                   name: {{ include "admin-wallet-api.fullname" . }}-lvc
+            - name: OCTET_BUWOO_WALLET_NUMBER
+              valueFrom:
+                secretKeyRef:
+                  key: octetBuwooWalletNumber
+                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
+            - name: OCTET_BUWOO_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: octetBuwooApiToken
+                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
+            - name: OCTET_BUWOO_CHILD_ADMIN_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: octetBuwooChildAdminAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
+            - name: BUWOO_CONTRACT_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: buwooContractAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
+            - name: BUWOO_MINTER_CONTRACT_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: buwooMinterContractAddress
+                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
           ports:
             - name: http
               containerPort: 3000
