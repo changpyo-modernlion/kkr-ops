@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "dashboard.fullname" . }}-keycloak
+data:
+  clientId: {{ default "" .Values.config.keycloak.clientId | quote }}
+  url: {{ default "" .Values.config.keycloak.url | quote }}
+  realm: {{ default "" .Values.config.keycloak.realm | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "dashboard.fullname" . }}-base-api
+data:
+  userApi: {{ default "" .Values.config.baseApi.userApi | quote }}
+  walletApi: {{ default "" .Values.config.baseApi.walletApi | quote }}
