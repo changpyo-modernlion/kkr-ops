@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  labels: {{- include "inapp.labels" . | nindent 4 }}-common
-  name: {{ include "inapp.fullname" . }}
+  labels: {{- include "inapp.labels" . | nindent 4 }}
+  name: {{ include "inapp.fullname" . }}-common
 data:
   apiBaseUrl: {{ default "" .Values.config.common.apiBaseUrl | quote }}
   strapiBaseUrl: {{ default "" .Values.config.common.strapiBaseUrl | quote }}
@@ -11,8 +11,8 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  labels: {{- include "inapp.labels" . | nindent 4 }}-aws
-  name: {{ include "inapp.fullname" . }}
+  labels: {{- include "inapp.labels" . | nindent 4 }}
+  name: {{ include "inapp.fullname" . }}-aws
 data:
   s3HostUrl: {{ default "" .Values.config.aws.s3HostUrl | quote }}
   cdnHostUrl: {{ default "" .Values.config.aws.cdnHostUrl | quote }}
