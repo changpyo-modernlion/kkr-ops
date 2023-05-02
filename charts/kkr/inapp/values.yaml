@@ -11,8 +11,13 @@ image:
   tag: ''
 
 config:
-  apiBaseUrl: ''
-  useVConsole: ''
+  common:
+    apiBaseUrl: ''
+    strapiBaseUrl: ''
+    useVConsole: ''
+  aws:
+    s3HostUrl: ''
+    cdnHostUrl: ''
 
 secret:
   oauth:

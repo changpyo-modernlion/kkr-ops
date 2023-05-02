@@ -37,12 +37,27 @@ spec:
               valueFrom:
                 configMapKeyRef: 
                   key: apiBaseUrl
-                  name: {{ include "inapp.fullname" . }}
+                  name: {{ include "inapp.fullname" . }}-common
             - name: USE_VCONSOLE
               valueFrom:
                 configMapKeyRef: 
                   key: useVConsole
-                  name: {{ include "inapp.fullname" . }}
+                  name: {{ include "inapp.fullname" . }}-common
+            - name: STRAPI_BASE_URL
+              valueFrom:
+                configMapKeyRef: 
+                  key: strapiBaseUrl
+                  name: {{ include "inapp.fullname" . }}-common
+            - name: S3_HOST_URL
+              valueFrom:
+                configMapKeyRef: 
+                  key: s3HostUrl
+                  name: {{ include "inapp.fullname" . }}-aws
+            - name: CDN_HOST_URL
+              valueFrom:
+                configMapKeyRef: 
+                  key: cdnHostUrl
+                  name: {{ include "inapp.fullname" . }}-aws
             - name: AUTH_BASE_URL
               valueFrom:
                 secretKeyRef: 
