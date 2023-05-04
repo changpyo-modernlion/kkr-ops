@@ -20,6 +20,7 @@ config:
     frontendHost: ""
     originalsHost: ""
     inAppHost: ""
+    adminWalletHost: ""
     ethereumNetwork: ""
   oauth:
     clientId: "test"

@@ -47,6 +47,11 @@ spec:
                 configMapKeyRef:
                   key: inAppHost
                   name: {{ include "payment.fullname" . }}-common
+            - name: ADMIN_WALLET_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: adminWalletHost
+                  name: {{ include "payment.fullname" . }}-common
             - name: ETHERS_NETWORK
               valueFrom:
                 configMapKeyRef:

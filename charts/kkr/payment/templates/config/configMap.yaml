@@ -7,6 +7,7 @@ data:
   frontendHost: {{ default "" .Values.config.backend.frontendHost | quote }}
   originalsHost: {{ default "" .Values.config.backend.originalsHost | quote }}
   inAppHost: {{ default "" .Values.config.backend.inAppHost | quote }}
+  adminWalletHost: {{ default "" .values.config.backend.adminWalletHost | quote }}
   ethereumNetwork: {{ default "" .Values.config.backend.ethereumNetwork | quote }}
 ---
 apiVersion: v1
