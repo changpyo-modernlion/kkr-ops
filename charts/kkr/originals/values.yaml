@@ -25,6 +25,8 @@ config:
   datadog:
     ddProfilingEnabled: "true"
     ddLogsInjectionEnabled: "true"
+  aws:
+    bucketName: ""
 
 secret:
   database:
@@ -41,6 +43,9 @@ secret:
     polygonHost: "https://polygon-mainnet.g.alchemy.com"
     ethereumApiKey: ""
     polygonApiKey: ""
+  aws:
+    accessKey: ""
+    secretKey: ""
 
 serviceAccount:
   # Specifies whether a service account should be created

@@ -120,6 +120,21 @@ spec:
                 configMapKeyRef:
                   key: ddLogsInjectionEnabled
                   name: {{ include "originals.fullname" . }}-datadog
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: accessKey
+                  name: {{ include "originals.fullname" . }}-aws
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: secretKey
+                  name: {{ include "originals.fullname" . }}-aws
+            - name: AWS_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: bucketName
+                  name: {{ include "originals.fullname" . }}-aws
           ports:
             - name: http
               containerPort: 3000
