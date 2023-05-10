@@ -3,18 +3,18 @@ kind: ConfigMap
 metadata:
   name: {{ include "frontend.fullname" . }}
 data:
-  api-endpoint: {{ default "" .Values.config.api_endpoint | quote }}
-  auth-api-endpoint: {{ default "" .Values.config.auth_api_endpoint | quote }}
-  ether-chain: {{ default "" .Values.config.ether_chain | quote }}
-  sentry-dsn: {{ default "" .Values.config.sentry_dsn | quote }}
-  usdc-address: {{ default "" .Values.config.address.usdc | quote }}
-  weth-address: {{ default "" .Values.config.address.weth | quote }} 
-  cdn-host-url: {{ default "" .Values.config.cdn_host_url | quote }} 
-  s3-host-url: {{ default "" .Values.config.s3_host_url | quote }} 
-  base-url: {{ default "" .Values.config.base_url | quote }} 
-  gtm-id: {{ default "" .Values.config.gtm_id | quote }} 
-  oauth-refresh-token-expires-in: {{ default "" .Values.config.oauth_refresh_token_expires_in | quote }} 
-  use-redux-logger: {{ default "" .Values.config.use_redux_logger | quote }} 
-  gtm-id: {{ default "" .Values.config.gtm_id | quote  }}
-  utilities-api-endpoint: {{ default "" .Values.config.utilities_api_endpoint | quote  }}
-  utilities-claim-url: {{ default "" .Values.config.utilities_claim_url | quote  }}
+  apiEndpoint: {{ default "" .Values.config.apiEndpoint | quote }}
+  authApiEndpoint: {{ default "" .Values.config.authApiEndpoint | quote }}
+  etherChain: {{ default "" .Values.config.etherChain | quote }}
+  sentryDsn: {{ default "" .Values.config.sentryDsn | quote }}
+  usdcAddress: {{ default "" .Values.config.address.usdc | quote }}
+  wethAddress: {{ default "" .Values.config.address.weth | quote }} 
+  cdnHostUrl: {{ default "" .Values.config.cdnHostUrl | quote }} 
+  s3HostUrl: {{ default "" .Values.config.s3HostUrl | quote }} 
+  baseUrl: {{ default "" .Values.config.baseUrl | quote }} 
+  strapiBaseUrl: {{ default "" .Values.config.strapiBaseUrl | quote }} 
+  gtmId: {{ default "" .Values.config.gtmId | quote }} 
+  oauthRefreshTokenExpiresIn: {{ default "" .Values.config.oauthRefreshTokenExpiresIn | quote }} 
+  useReduxLogger: {{ default "" .Values.config.useReduxLogger | quote }} 
+  utilitiesApiEndpoint: {{ default "" .Values.config.utilitiesApiEndpoint | quote  }}
+  utilitiesClaimUrl: {{ default "" .Values.config.utilitiesClaimUrl | quote  }}

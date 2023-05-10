@@ -36,72 +36,77 @@ spec:
             - name: API_ENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  key: api-endpoint
+                  key: apiEndpoint
                   name: {{ include "frontend.fullname" . }}
             - name: AUTH_API_ENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  key: auth-api-endpoint
+                  key: authApiEndpoint
                   name: {{ include "frontend.fullname" . }}
             - name: ETHER_CHAIN
               valueFrom:
                 configMapKeyRef:
-                  key: ether-chain
+                  key: etherChain
                   name: {{ include "frontend.fullname" . }}
             - name: SENTRY_DSN
               valueFrom:
                 configMapKeyRef:
-                  key: sentry-dsn
+                  key: sentryDsn
                   name: {{ include "frontend.fullname" . }}
             - name: USDC_ADDRESS
               valueFrom:
                 configMapKeyRef:
-                  key: usdc-address
+                  key: usdcAddress
                   name: {{ include "frontend.fullname" . }}
             - name: WETH_ADDRESS
               valueFrom:
                 configMapKeyRef:
-                  key: weth-address
+                  key: wethAddress
                   name: {{ include "frontend.fullname" . }}
             - name: CDN_HOST_URL
               valueFrom:
                 configMapKeyRef:
-                  key: cdn-host-url
+                  key: cdnHostUrl
                   name: {{ include "frontend.fullname" . }}
             - name: S3_HOST_URL
               valueFrom:
                 configMapKeyRef:
-                  key: s3-host-url
+                  key: s3HostUrl
                   name: {{ include "frontend.fullname" . }}
             - name: BASE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: base-url
+                  key: baseUrl
+                  name: {{ include "frontend.fullname" . }}
+            - name: STRAPI_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: strapiBaseUrl
                   name: {{ include "frontend.fullname" . }}
             - name: OAUTH_REFRESH_TOKEN_EXPIRES_IN
               valueFrom:
                 configMapKeyRef:
-                  key: oauth-refresh-token-expires-in
+                  key: oauthRefreshTokenExpiresIn
                   name: {{ include "frontend.fullname" . }}
             - name: USE_REDUX_LOGGER
               valueFrom:
                 configMapKeyRef:
-                  key: use-redux-logger
+                  key: useReduxLogger
                   name: {{ include "frontend.fullname" . }}
             - name: GTM_ID
               valueFrom:
                 configMapKeyRef:
-                  key: gtm-id
+                  key: gtmId
                   name: {{ include "frontend.fullname" . }}
             - name: UTILITIES_API_ENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  key: utilities-api-endpoint
+                  key: utilitiesApiEndpoint
                   name: {{ include "frontend.fullname" . }}
             - name: UTILITIES_CLAIM_URL
               valueFrom:
                 configMapKeyRef:
-                  key: utilities-claim-url
+                  key: utilitiesClaimUrl
                   name: {{ include "frontend.fullname" . }}
 
           ports:
