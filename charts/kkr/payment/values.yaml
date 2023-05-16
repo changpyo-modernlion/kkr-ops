@@ -34,6 +34,8 @@ config:
       rapidCrawlingItemQueueUrl: ""
       rapidCrawlingRefreshItemMetaQueueName: ""
       rapidCrawlingRefreshItemMetaQueueUrl: ""
+      checkStatusOfAirdropQueueName: ""
+      checkStatusOfAirdropQueueUrl: ""
   datadog:
     ddProfilingEnabled: "true"
     ddLogsInjectionEnabled: "true"

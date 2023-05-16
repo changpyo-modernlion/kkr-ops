@@ -87,6 +87,16 @@ spec:
                 configMapKeyRef:
                   key: rapidCrawlingRefreshItemMetaQueueUrl
                   name: {{ include "payment.fullname" . }}-aws-queue
+            - name: CHECK_STATUS_OF_AIRDROP_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: checkStatusOfAirdropQueueName
+                  name: {{ include "payment.fullname" . }}-aws-queue
+            - name: CHECK_STATUS_OF_AIRDROP_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: checkStatusOfAirdropQueueUrl
+                  name: {{ include "payment.fullname" . }}-aws-queue
             - name: HECTO_HASH_SECRET
               valueFrom:
                 secretKeyRef:

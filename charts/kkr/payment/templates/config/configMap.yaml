@@ -21,6 +21,8 @@ data:
   rapidCrawlingItemQueueUrl: {{ default "" .Values.config.aws.queue.rapidCrawlingItemQueueUrl | quote }}
   rapidCrawlingRefreshItemMetaQueueName: {{ default "" .Values.config.aws.queue.rapidCrawlingRefreshItemMetaQueueName | quote }}
   rapidCrawlingRefreshItemMetaQueueUrl: {{ default "" .Values.config.aws.queue.rapidCrawlingRefreshItemMetaQueueUrl | quote }}
+  checkStatusOfAirdropQueueName: {{ default "" .Values.config.aws.queue.checkStatusOfAirdropQueueName | quote }}
+  checkStatusOfAirdropQueueUrl: {{ default "" .Values.config.aws.queue.checkStatusOfAirdropQueueUrl | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
