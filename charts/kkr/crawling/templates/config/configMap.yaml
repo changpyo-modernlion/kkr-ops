@@ -23,6 +23,7 @@ metadata:
   name: {{ include "crawling.fullname" . }}-hosts
 data:
   backend: {{ default "" .Values.config.hosts.backend | quote }}
+  payment: {{ default "" .Values.config.hosts.payment | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -39,6 +40,7 @@ data:
   exchangeEvent: {{ default "" .Values.config.queue.consumer.exchangeEvent | quote }}
   orderCancelled: {{ default "" .Values.config.queue.consumer.orderCancelled | quote }}
   orderFulfilled: {{ default "" .Values.config.queue.consumer.orderFulfilled | quote }}
+  checkStatusOfAirdrop: {{ default "" .Values.config.queue.consumer.checkStatusOfAirdrop | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

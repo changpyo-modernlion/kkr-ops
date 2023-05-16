@@ -13,6 +13,7 @@ image:
 config:
   hosts:
     backend: ""
+    payment: ""
   crawling:
     ethreumNetwork: ""
     marketplaceAddress: ""
@@ -28,11 +29,12 @@ config:
       allItem: ""
       collectionTx: ""
       itemTx: ""
-      new_accountAddress: ""
+      newAccountAddress: ""
       refreshItemMeta: ""
       exchangeEvent: ""
       orderCancelled: ""
       orderFulfilled: ""
+      checkStatusOfAirdrop: ""
     producer:
       collection: ""
       item: ""
