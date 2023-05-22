@@ -19,4 +19,8 @@ kind: ConfigMap
 metadata:
   name: {{ include "originals.fullname" . }}-aws
 data:
+  region: {{ default "" .Values.config.aws.region | quote }}
   bucketName: {{ default "" .Values.config.aws.bucketName | quote }}
+  assetFilePath: {{ default "" .Values.config.aws.assetFilePath | quote }}
+  checkStatusOfAirdropQueueName: {{ default "" .Values.config.aws.checkStatusOfAirdropQueueName | quote }}
+  checkStatusOfAirdropQueueUrl: {{ default "" .Values.config.aws.checkStatusOfAirdropQueueUrl | quote }}

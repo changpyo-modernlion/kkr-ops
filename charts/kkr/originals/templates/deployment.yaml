@@ -135,6 +135,31 @@ spec:
                 configMapKeyRef:
                   key: bucketName
                   name: {{ include "originals.fullname" . }}-aws
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  key: region
+                  name: {{ include "originals.fullname" . }}-aws
+            - name: ASSET_FILE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  key: assetFilePath
+                  name: {{ include "originals.fullname" . }}-aws
+            - name: AWS_CHECK_STATUS_OF_AIRDROP_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: checkStatusOfAirdropQueueName
+                  name: {{ include "originals.fullname" . }}-aws
+            - name: AWS_CHECK_STATUS_OF_AIRDROP_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: checkStatusOfAirdropQueueUrl
+                  name: {{ include "originals.fullname" . }}-aws
+            - name: EXTERNAL_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: externalSecretKey
+                  name: {{ include "originals.fullname" . }}-jwt
           ports:
             - name: http
               containerPort: 3000

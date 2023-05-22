@@ -26,7 +26,11 @@ config:
     ddProfilingEnabled: "true"
     ddLogsInjectionEnabled: "true"
   aws:
+    region: ""
     bucketName: ""
+    assetFilePath: ""
+    checkStatusOfAirdropQueueName: ""
+    checkStatusOfAirdropQueueUrl: ""
 
 secret:
   database:
@@ -46,6 +50,8 @@ secret:
   aws:
     accessKey: ""
     secretKey: ""
+  jwt:
+    externalSecretKey: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
