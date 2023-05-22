@@ -16,7 +16,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: public-{{ $fullName }}
+  name: external-{{ $fullName }}
   labels:
     {{- include "originals.labels" . | nindent 4 }}
   annotations:
