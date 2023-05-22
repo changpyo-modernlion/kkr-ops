@@ -18,6 +18,7 @@ config:
   backend:
     ethereumBackendHost: ""
     polygonBackendHost: ""
+    adminWalletHost: ""
   oauth:
     clientId: "clientId"
     clientSecret: "clientSecret"

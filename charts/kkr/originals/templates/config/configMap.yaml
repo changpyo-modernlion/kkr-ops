@@ -5,6 +5,7 @@ metadata:
 data:
   ethereumBackendHost: {{ default "" .Values.config.backend.ethereumBackendHost | quote }}
   polygonBackendHost: {{ default "" .Values.config.backend.polygonBackendHost | quote }}
+  adminWalletHost: {{ default "" .Values.config.backend.adminWalletHost | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

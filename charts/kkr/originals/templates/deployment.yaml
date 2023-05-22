@@ -46,6 +46,11 @@ spec:
                 configMapKeyRef:
                   key: polygonBackendHost
                   name: {{ include "originals.fullname" . }}
+            - name: ADMIN_WALLET_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: adminWalletHost
+                  name: {{ include "originals.fullname" . }}
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
