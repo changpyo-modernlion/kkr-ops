@@ -37,24 +37,7 @@ secret:
     region: ""
     accessKey: ""
     secretKey: ""
-  ohnim:
-    walletNumber: ""
-    apiToken: ""
-    childAdminAddress: ""
-    contractAddress: ""
-    minterContractAddress: ""
-  lvc:
-    walletNumber: ""
-    apiToken: ""
-    childAdminAddress: ""
-    contractAddress: ""
-    minterContractAddress: ""
-  buwoo:
-    walletNumber: ""
-    apiToken: ""
-    childAdminAddress: ""
-    contractAddress: ""
-    minterContractAddress: ""
+  contractPin: ""
 
 podAnnotations: {}
 

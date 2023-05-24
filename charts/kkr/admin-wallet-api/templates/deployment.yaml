@@ -98,81 +98,11 @@ spec:
                 configMapKeyRef:
                   key: polygonProviderUrl
                   name: {{ include "admin-wallet-api.fullname" . }}-provider
-            - name: OCTET_OHNIM_WALLET_NUMBER
+            - name: PIN
               valueFrom:
                 secretKeyRef:
-                  key: octetOhnimWalletNumber
-                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
-            - name: OCTET_OHNIM_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  key: octetOhnimApiToken
-                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
-            - name: OCTET_OHNIM_CHILD_ADMIN_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: octetOhnimChildAdminAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
-            - name: OHNIM_CONTRACT_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: ohnimContractAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
-            - name: OHNIM_MINTER_CONTRACT_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: ohnimMinterContractAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-ohnim
-            - name: OCTET_LVC_WALLET_NUMBER
-              valueFrom:
-                secretKeyRef:
-                  key: octetLvcWalletNumber
-                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
-            - name: OCTET_LVC_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  key: octetLvcApiToken
-                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
-            - name: OCTET_LVC_CHILD_ADMIN_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: octetLvcChildAdminAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
-            - name: LVC_CONTRACT_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: lvcContractAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
-            - name: LVC_MINTER_CONTRACT_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: lvcMinterContractAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-lvc
-            - name: OCTET_BUWOO_WALLET_NUMBER
-              valueFrom:
-                secretKeyRef:
-                  key: octetBuwooWalletNumber
-                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
-            - name: OCTET_BUWOO_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  key: octetBuwooApiToken
-                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
-            - name: OCTET_BUWOO_CHILD_ADMIN_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: octetBuwooChildAdminAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
-            - name: BUWOO_CONTRACT_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: buwooContractAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
-            - name: BUWOO_MINTER_CONTRACT_ADDRESS
-              valueFrom:
-                secretKeyRef:
-                  key: buwooMinterContractAddress
-                  name: {{ include "admin-wallet-api.fullname" . }}-buwoo
+                  key: contractPin
+                  name: {{ include "admin-wallet-api.fullname" . }}-common
           ports:
             - name: http
               containerPort: 3000
