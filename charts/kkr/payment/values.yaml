@@ -52,6 +52,9 @@ secret:
   blueWalnut:
     mid: ""
     merchantKey: ""
+    cancelPwd: ""
+    blueWalnutApproveUrl: ""
+    blueWalnutCancelUrl: ""
   database:
     host: ""
     engine: ""

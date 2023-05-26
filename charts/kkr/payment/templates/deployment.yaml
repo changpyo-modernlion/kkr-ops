@@ -142,6 +142,21 @@ spec:
                 secretKeyRef:
                   key: merchantKey
                   name: {{ include "payment.fullname" . }}-blue-walnut
+            - name: BLUE_WALNUT_CANCEL_PWD
+              valueFrom:
+                secretKeyRef:
+                  key: cancelPwd
+                  name: {{ include "payment.fullname" . }}-blue-walnut
+            - name: BLUE_WALNUT_APPROVE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: blueWalnutApproveUrl
+                  name: {{ include "payment.fullname" . }}-blue-walnut
+            - name: BLUE_WALNUT_CANCEL_URL
+              valueFrom:
+                secretKeyRef:
+                  key: blueWalnutCancelUrlUrl
+                  name: {{ include "payment.fullname" . }}-blue-walnut
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
