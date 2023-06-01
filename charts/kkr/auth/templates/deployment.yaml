@@ -316,6 +316,11 @@ spec:
                 secretKeyRef:
                   key: oauth2RefreshTokenExpiresIn
                   name: {{ include "auth.fullname" . }}-oauth
+            - name: OAUTH2_CODE_EXPIRES_IN
+              valueFrom:
+                secretKeyRef:
+                  key: oauth2CodeExpiresIn
+                  name: {{ include "auth.fullname" . }}-oauth
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
