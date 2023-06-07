@@ -80,6 +80,24 @@ admission.datadoghq.com/config.mode: "socket"
 {{- end }}
 
 {{/*
+Datadog Labels For worker
+*/}}
+{{- define "auth.datadogLabelsForWorker" -}}
+tags.datadoghq.com/env: {{ .Release.Namespace }}
+tags.datadoghq.com/service: {{ .Release.Name }}-worker
+tags.datadoghq.com/version: {{ .Chart.Version }}
+{{- end }}
+
+{{/*
+Datadog selectorLabels For worker
+*/}}
+{{- define "auth.datadogSelectorLabelsForWorker" -}}
+{{ include "auth.datadogLabelsForWorker" . }}
+admission.datadoghq.com/enabled: "true"
+admission.datadoghq.com/config.mode: "socket"
+{{- end }}
+
+{{/*
 Create kongplugin name of cors
 */}}
 {{- define "auth.cors" -}}

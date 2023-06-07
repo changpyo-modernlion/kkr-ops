@@ -192,6 +192,11 @@ spec:
                 secretKeyRef:
                   key: poolSize
                   name: {{ include "payment.fullname" . }}-database
+            - name: MIGRATE_RUN
+              valueFrom:
+                secretKeyRef:
+                  key: migrateRun
+                  name: {{ include "payment.fullname" . }}-database
             - name: ETHERS_ALCHEMY_KEY
               valueFrom:
                 secretKeyRef:

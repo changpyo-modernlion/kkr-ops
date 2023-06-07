@@ -63,6 +63,7 @@ secret:
     port: ""
     user: ""
     poolAize: ""
+    migrateRun: "false"
   alchemy:
     apiKey: ""
   aws:
