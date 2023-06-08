@@ -245,7 +245,6 @@ metadata:
   name: {{ include "auth.fullname" . }}-worker
   labels:
     {{- include "auth.labels" . | nindent 4 }}
-    {{- include "auth.datadogLabelsForWorker" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -253,7 +252,6 @@ spec:
   selector:
     matchLabels:
       {{- include "auth.selectorLabels" . | nindent 6 }}
-      {{- include "auth.datadogSelectorLabelsForWorker" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
