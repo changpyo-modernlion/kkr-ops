@@ -14,6 +14,8 @@ metadata:
 data:
   awsWalletCreateNotificationQueueName: {{ default "" .Values.config.aws.walletCreateNotificationQueueName | quote }}
   awsWalletCreateNotificationQueueUrl: {{ default "" .Values.config.aws.walletCreateNotificationQueueUrl | quote }}
+  awsUserWalletTransactionQueueName: {{ default "" .Values.config.aws.userWalletTransactionQueueName | quote }}
+  awsUserWalletTransactionQueueUrl: {{ default "" .Values.config.aws.userWalletTransactionQueueUrl | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

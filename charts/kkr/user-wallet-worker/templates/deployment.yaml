@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "user-wallet-worker.fullname" . }}
+  labels:
+    {{- include "user-wallet-worker.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "user-wallet-worker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "user-wallet-worker.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  key: awsRegion
+                  name: {{ include "user-wallet-worker.fullname" . }}-aws
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: awsAccessKey
+                  name: {{ include "user-wallet-worker.fullname" . }}-aws
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: awsSecretKey
+                  name: {{ include "user-wallet-worker.fullname" . }}-aws
+            - name: AWS_WALLET_TRANSACTION_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: awsWalletTransactionQueueName
+                  name: {{ include "user-wallet-worker.fullname" . }}-aws
+            - name: AWS_WALLET_TRANSACTION_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: awsWalletTransactionQueueUrl
+                  name: {{ include "user-wallet-worker.fullname" . }}-aws
+            - name: ETHEREUM_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: ethereumProviderUrl
+                  name: {{ include "user-wallet-worker.fullname" . }}-provider
+            - name: POLYGON_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: polygonProviderUrl
+                  name: {{ include "user-wallet-worker.fullname" . }}-provider
+            - name: WALLET_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: walletApiUrl
+                  name: {{ include "user-wallet-worker.fullname" . }}-api
+            - name: WALLET_API_PATH
+              valueFrom:
+                configMapKeyRef:
+                  key: walletApiPath
+                  name: {{ include "user-wallet-worker.fullname" . }}-api
+          ports:
+            - name: http
+              containerPort: 4000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

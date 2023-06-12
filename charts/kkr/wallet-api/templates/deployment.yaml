@@ -90,6 +90,16 @@ spec:
                 configMapKeyRef:
                   key: awsWalletCreateNotificationQueueUrl
                   name: {{ include "wallet-api.fullname" . }}-aws
+            - name: AWS_USER_WALLET_TRANSACTION_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: awsUserWalletTransactionQueueName
+                  name: {{ include "wallet-api.fullname" . }}-aws
+            - name: AWS_USER_WALLET_TRANSACTION_QUEUE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: awsUserWalletTransactionQueueUrl
+                  name: {{ include "wallet-api.fullname" . }}-aws
             - name: OCTET_API_TOKEN
               valueFrom:
                 secretKeyRef:

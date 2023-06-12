@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "user-wallet-worker.fullname" . }}-aws
+data:
+  awsWalletTransactionQueueName: {{ default "" .Values.config.aws.walletTransactionQueueName | quote }}
+  awsWalletTransactionQueueUrl: {{ default "" .Values.config.aws.walletTransactionQueueUrl | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "user-wallet-worker.fullname" . }}-provider
+data:
+  ethereumProviderUrl: {{ default "" .Values.config.provider.ethereumProviderUrl | quote }}
+  polygonProviderUrl: {{ default "" .Values.config.provider.polygonProviderUrl | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "user-wallet-worker.fullname" . }}-api
+data:
+  walletApiUrl: {{ default "" .Values.config.api.walletApiUrl | quote }}
+  walletApiPath: {{ default "" .Values.config.api.walletApiPath | quote }}

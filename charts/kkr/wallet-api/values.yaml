@@ -22,6 +22,9 @@ config:
   aws:
     walletCreateNotificationQueueName: ""
     walletCreateNotificationQueueUrl: ""
+    userWalletTransactionQueueName: ""
+    userWalletTransactionQueueUrl: ""
+    
   jwt:
     expiresIn: "180"
   oauth:
