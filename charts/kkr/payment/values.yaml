@@ -41,7 +41,7 @@ config:
     ddLogsInjectionEnabled: "true"
 
 secret:
-  hecto:
+  bank:
     hashSecret: ""
     mid: ""
     netPayCancle: ""
@@ -49,12 +49,16 @@ secret:
     payCancle: ""
     payApprove: ""
     trInfo: ""
-  blueWalnut:
+  card:
     mid: ""
+    hyundaiMid: ""
+    eventMid: ""
     merchantKey: ""
+    hyundaiMerchantKey: ""
+    eventMerchantKey: ""
+    payApproveUrl: ""
+    payCancelUrl: ""
     cancelPwd: ""
-    blueWalnutApproveUrl: ""
-    blueWalnutCancelUrl: ""
   database:
     host: ""
     engine: ""

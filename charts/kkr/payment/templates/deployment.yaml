@@ -97,66 +97,86 @@ spec:
                 configMapKeyRef:
                   key: checkStatusOfAirdropQueueUrl
                   name: {{ include "payment.fullname" . }}-aws-queue
-            - name: HECTO_HASH_SECRET
+            - name: BANK_HASH_SECRET
               valueFrom:
                 secretKeyRef:
                   key: hashSecret
-                  name: {{ include "payment.fullname" . }}-hecto
-            - name: HECTO_MID
+                  name: {{ include "payment.fullname" . }}-bank
+            - name: BANK_MID
               valueFrom:
                 secretKeyRef:
                   key: mid
-                  name: {{ include "payment.fullname" . }}-hecto
-            - name: HECTO_NET_PAY_CANCLE
+                  name: {{ include "payment.fullname" . }}-bank
+            - name: BANK_NET_PAY_CANCLE
               valueFrom:
                 secretKeyRef:
                   key: netPayCancle
-                  name: {{ include "payment.fullname" . }}-hecto
-            - name: HECTO_PAYMENT_INFO
+                  name: {{ include "payment.fullname" . }}-bank
+            - name: BANK_PAYMENT_INFO
               valueFrom:
                 secretKeyRef:
                   key: paymentInfo
-                  name: {{ include "payment.fullname" . }}-hecto
-            - name: HECTO_PAY_CANCLE
+                  name: {{ include "payment.fullname" . }}-bank
+            - name: BANK_PAY_CANCLE
               valueFrom:
                 secretKeyRef:
                   key: payCancle
-                  name: {{ include "payment.fullname" . }}-hecto
-            - name: HECTO_PAY_APPROVE
+                  name: {{ include "payment.fullname" . }}-bank
+            - name: BANK_PAY_APPROVE
               valueFrom:
                 secretKeyRef:
                   key: payApprove
-                  name: {{ include "payment.fullname" . }}-hecto
-            - name: HECTO_TR_INFO
+                  name: {{ include "payment.fullname" . }}-bank
+            - name: BANK_TR_INFO
               valueFrom:
                 secretKeyRef:
                   key: trInfo
-                  name: {{ include "payment.fullname" . }}-hecto
-            - name: BLUE_WALNUT_MID
+                  name: {{ include "payment.fullname" . }}-bank
+            - name: CARD_MID
               valueFrom:
                 secretKeyRef:
                   key: mid
-                  name: {{ include "payment.fullname" . }}-blue-walnut
-            - name: BLUE_WALNUT_MERCHANT_KEY
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_HYUNDAI_MID
+              valueFrom:
+                secretKeyRef:
+                  key: hyundaiMid
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_EVENT_MID
+              valueFrom:
+                secretKeyRef:
+                  key: eventMid
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_MERCHANT_KEY
               valueFrom:
                 secretKeyRef:
                   key: merchantKey
-                  name: {{ include "payment.fullname" . }}-blue-walnut
-            - name: BLUE_WALNUT_CANCEL_PWD
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_HYUNDAI_MERCHANT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: hyundaiMerchantKey
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_EVENT_MERCHANT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: eventMerchantKey
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_CANCEL_PWD
               valueFrom:
                 secretKeyRef:
                   key: cancelPwd
-                  name: {{ include "payment.fullname" . }}-blue-walnut
-            - name: BLUE_WALNUT_APPROVE_URL
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_PAY_APPROVE_URL
               valueFrom:
                 secretKeyRef:
-                  key: blueWalnutApproveUrl
-                  name: {{ include "payment.fullname" . }}-blue-walnut
-            - name: BLUE_WALNUT_CANCEL_URL
+                  key: payApproveUrl
+                  name: {{ include "payment.fullname" . }}-card
+            - name: CARD_PAY_CANCEL_URL
               valueFrom:
                 secretKeyRef:
-                  key: blueWalnutCancelUrl
-                  name: {{ include "payment.fullname" . }}-blue-walnut
+                  key: payCancelUrl
+                  name: {{ include "payment.fullname" . }}-card
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
