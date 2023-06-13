@@ -46,15 +46,15 @@ spec:
                 secretKeyRef:
                   key: awsSecretKey
                   name: {{ include "admin-wallet-worker.fullname" . }}-aws
-            - name: AWS_ADMIN_WALLET_QUEUE_NAME
+            - name: AWS_WALLET_TRANSACTION_QUEUE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: awsAdminWalletQueueName
+                  key: awsWalletTransactionQueueName
                   name: {{ include "admin-wallet-worker.fullname" . }}-aws
-            - name: AWS_ADMIN_WALLET_QUEUE_URL
+            - name: AWS_WALLET_TRANSACTION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: awsAdminWalletQueueUrl
+                  key: awsWalletTransactionQueueUrl
                   name: {{ include "admin-wallet-worker.fullname" . }}-aws
             - name: ETHEREUM_URL
               valueFrom:
@@ -66,10 +66,15 @@ spec:
                 configMapKeyRef:
                   key: polygonProviderUrl
                   name: {{ include "admin-wallet-worker.fullname" . }}-provider
-            - name: ADMIN_WALLET_API_URL
+            - name: WALLET_API_URL
               valueFrom:
                 configMapKeyRef:
-                  key: adminWalletApiUrl
+                  key: walletApiUrl
+                  name: {{ include "admin-wallet-worker.fullname" . }}-api
+            - name: WALLET_API_PATH
+              valueFrom:
+                configMapKeyRef:
+                  key: walletApiPath
                   name: {{ include "admin-wallet-worker.fullname" . }}-api
           ports:
             - name: http

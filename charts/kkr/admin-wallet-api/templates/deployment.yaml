@@ -78,12 +78,12 @@ spec:
                 secretKeyRef:
                   key: awsSecretKey
                   name: {{ include "admin-wallet-api.fullname" . }}-aws
-            - name: AWS_ADMIN_WALLET_QUEUE_NAME
+            - name: AWS_ADMIN_WALLET_TRANSACTION_QUEUE_NAME
               valueFrom:
                 configMapKeyRef:
                   key: awsAdminWalletQueueName
                   name: {{ include "admin-wallet-api.fullname" . }}-aws
-            - name: AWS_ADMIN_WALLET_QUEUE_URL
+            - name: AWS_ADMIN_WALLET_TRANSACTION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
                   key: awsAdminWalletQueueUrl

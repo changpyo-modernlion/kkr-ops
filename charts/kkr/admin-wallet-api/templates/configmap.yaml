@@ -11,5 +11,5 @@ kind: ConfigMap
 metadata:
   name: {{ include "admin-wallet-api.fullname" . }}-aws
 data:
-  awsAdminWalletQueueName: {{ default "" .Values.config.aws.adminWalletQueueName | quote }}
-  awsAdminWalletQueueUrl: {{ default "" .Values.config.aws.adminWalletQueueUrl | quote }}
+  awsAdminWalletTransactionQueueName: {{ default "" .Values.config.aws.adminWalletTransactionQueueName | quote }}
+  awsAdminWalletTransactionQueueUrl: {{ default "" .Values.config.aws.adminWalletTransactionQueueUrl | quote }}

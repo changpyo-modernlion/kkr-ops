@@ -16,8 +16,8 @@ fullnameOverride: ""
 
 config:
   aws:
-    adminWalletQueueName: ""
-    adminWalletQueueUrl: ""
+    adminWalletTransactionQueueName: ""
+    adminWalletTransactionQueueUrl: ""
   provider:
     ethereumProviderUrl: ""
     polygonProviderUrl: ""

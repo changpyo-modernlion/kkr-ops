@@ -12,13 +12,14 @@ image:
 
 config:
   aws:
-    adminWalletQueueName: ""
-    adminWalletQueueUrl: ""
+    walletTransactionQueueName: ""
+    walletTransactionQueueUrl: ""
   provider:
     ethereumProviderUrl: ""
     polygonProviderUrl: ""
   api:
-    adminWalletApiUrl: ""
+    walletApiUrl: ""
+    walletApiPath: ""
 
 secret:
   aws:
