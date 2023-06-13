@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: 293315485843.dkr.ecr.ap-northeast-2.amazonaws.com/kkr/admin-wallet-worker
+  repository: 293315485843.dkr.ecr.ap-northeast-2.amazonaws.com/kkr/user-wallet-worker
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""

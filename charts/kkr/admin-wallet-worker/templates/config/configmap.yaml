@@ -19,4 +19,5 @@ kind: ConfigMap
 metadata:
   name: {{ include "admin-wallet-worker.fullname" . }}-api
 data:
-  adminWalletApiUrl: {{ default "" .Values.config.api.adminWalletApiUrl | quote }}
+  walletApiUrl: {{ default "" .Values.config.api.walletApiUrl | quote }}
+  walletApiPath: {{ default "" .Values.config.api.walletApiPath | quote }}
