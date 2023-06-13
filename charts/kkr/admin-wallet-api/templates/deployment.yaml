@@ -98,7 +98,7 @@ spec:
                 configMapKeyRef:
                   key: polygonProviderUrl
                   name: {{ include "admin-wallet-api.fullname" . }}-provider
-            - name: PIN
+            - name: CONTRACT_PIN
               valueFrom:
                 secretKeyRef:
                   key: contractPin

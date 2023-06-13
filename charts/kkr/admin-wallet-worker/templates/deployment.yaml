@@ -82,11 +82,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /worker/v1/admin/wallet/health
+              path: /
               port: http
           readinessProbe:
             httpGet:
-              path: /worker/v1/admin/wallet/health
+              path: /
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
