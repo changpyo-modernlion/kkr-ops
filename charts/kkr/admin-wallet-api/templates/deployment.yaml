@@ -81,12 +81,12 @@ spec:
             - name: AWS_ADMIN_WALLET_TRANSACTION_QUEUE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: awsAdminWalletQueueName
+                  key: awsAdminWalletTransactionQueueName
                   name: {{ include "admin-wallet-api.fullname" . }}-aws
             - name: AWS_ADMIN_WALLET_TRANSACTION_QUEUE_URL
               valueFrom:
                 configMapKeyRef:
-                  key: awsAdminWalletQueueUrl
+                  key: awsAdminWalletTransactionQueueUrl
                   name: {{ include "admin-wallet-api.fullname" . }}-aws
             - name: ETHEREUM_URL
               valueFrom:
