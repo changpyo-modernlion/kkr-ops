@@ -1,0 +1,46 @@
+{{- if .Values.responseTransformer.enabled -}}
+apiVersion: configuration.konghq.com/v1
+config:
+  {{- with .Values.responseTransformer.config }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+kind: KongPlugin
+metadata:
+  name: {{ include "market-frontend.fullname" . }}-response-transformer
+plugin: response-transformer
+---
+{{- end }}
+{{- if .Values.httpsRedirect.enabled -}}
+apiVersion: configuration.konghq.com/v1
+config:
+  functions:
+  - |
+    local scheme = kong.request.get_scheme()
+    if scheme == "http" then
+      local host = kong.request.get_host()
+      local query = kong.request.get_path_with_query()
+      local url = "https://" .. host ..query
+      kong.response.set_header("Location",url)
+      return kong.response.exit(302,url)
+    end
+kind: KongPlugin
+metadata:
+  name: {{ include "market-frontend.fullname" . }}-https-redirect
+plugin: pre-function
+---
+{{- end }}
+{{- if .Values.ipRestriction.enabled -}}
+apiVersion: configuration.konghq.com/v1
+config:
+  allow:
+  {{- with .Values.ipRestriction.allow }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  message: |
+    {{ .Values.ipRestriction.message | default "access denied" }}
+kind: KongPlugin
+metadata:
+  name: {{ include "market-frontend.fullname" . }}-ip-restriction
+plugin: ip-restriction
+---
+{{- end }}

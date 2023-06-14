@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "market-frontend.fullname" . }}
+data:
+  chain: {{ default "" .Values.config.chain | quote }}
+  sentryDsn: {{ default "" .Values.config.sentryDsn | quote }}
+  apiBaseUrl: {{ default "" .Values.config.apiBaseUrl | quote }}
+  usdcAddress: {{ default "" .Values.config.address.usdc | quote }}
+  wethAddress: {{ default "" .Values.config.address.weth | quote }}
+  oauthRefreshTokenExpiresIn: {{ default "" .Values.config.oauthRefreshTokenExpiresIn | quote }} 
+  s3HostUrl: {{ default "" .Values.config.s3HostUrl | quote }}
+  cdnHostUrl: {{ default "" .Values.config.cdnHostUrl | quote }}
+  baseUrl: {{ default "" .Values.config.baseUrl | quote }}
+  gtmId: {{ default "" .Values.config.gtmId | quote }} 
+  authApiBaseUrl: {{ default "" .Values.config.authApiBaseUrl | quote }}
+  utilitiesApiBaseUrl: {{ default "" .Values.config.utilitiesApiBaseUrl | quote  }}
+  utilitiesClaimBaseUrl: {{ default "" .Values.config.utilitiesClaimBaseUrl | quote  }}
+  nodeEnv: {{ default "" .Values.config.nodeEnv | quote  }}

@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "market-frontend.fullname" . }}
+  labels:
+    {{- include "market-frontend.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "market-frontend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "market-frontend.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "market-frontend.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CHAIN
+              valueFrom:
+                configMapKeyRef:
+                  key: chain
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: SENTRY_DSN
+              valueFrom:
+                configMapKeyRef:
+                  key: sentryDsn
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: apiBaseUrl
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: USDC_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: usdcAddress
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: WETH_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: wethAddress
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: OAUTH_REFRESH_TOKEN_EXPIRES_IN
+              valueFrom:
+                configMapKeyRef:
+                  key: oauthRefreshTokenExpiresIn
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: S3_HOST_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: s3HostUrl
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: CDN_HOST_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: cdnHostUrl
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: baseUrl
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: GTM_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: gtmId
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: AUTH_API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: authApiBaseUrl
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: UTILITIES_API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: utilitiesApiBaseUrl
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: UTILITIES_CLAIM_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: utilitiesClaimBaseUrl
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  key: nodeEnv
+                  name: {{ include "market-frontend.fullname" . }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
