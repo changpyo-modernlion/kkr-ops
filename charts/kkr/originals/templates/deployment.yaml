@@ -40,17 +40,27 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: ethereumBackendHost
-                  name: {{ include "originals.fullname" . }}
+                  name: {{ include "originals.fullname" . }}-host
             - name: POLYGON_BACKEND_HOST
               valueFrom:
                 configMapKeyRef:
                   key: polygonBackendHost
-                  name: {{ include "originals.fullname" . }}
+                  name: {{ include "originals.fullname" . }}-host
+            - name: ETHEREUM_PAYMENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: ethereumPaymentHost
+                  name: {{ include "originals.fullname" . }}-host
+            - name: POLYGON_PAYMENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: polygonPaymentHost
+                  name: {{ include "originals.fullname" . }}-host
             - name: ADMIN_WALLET_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: adminWalletHost
-                  name: {{ include "originals.fullname" . }}
+                  key: adminWallet
+                  name: {{ include "originals.fullname" . }}-host
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:

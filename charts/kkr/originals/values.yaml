@@ -15,10 +15,14 @@ nameOverride: ""
 fullnameOverride: ""
 
 config:
-  backend:
-    ethereumBackendHost: ""
-    polygonBackendHost: ""
-    adminWalletHost: ""
+  host:
+    ethereum:
+      backend: ""
+      payment: ""
+    polygon:
+      backend: ""
+      payment: ""
+    adminWallet: ""
   oauth:
     clientId: "clientId"
     clientSecret: "clientSecret"

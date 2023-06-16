@@ -1,11 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "originals.fullname" . }}
+  name: {{ include "originals.fullname" . }}-host
 data:
-  ethereumBackendHost: {{ default "" .Values.config.backend.ethereumBackendHost | quote }}
-  polygonBackendHost: {{ default "" .Values.config.backend.polygonBackendHost | quote }}
-  adminWalletHost: {{ default "" .Values.config.backend.adminWalletHost | quote }}
+  ethereumBackendHost: {{ default "" .Values.config.host.ethereum.backend | quote }}
+  polygonBackendHost: {{ default "" .Values.config.host.polygon.backend | quote }}
+  ethereumPaymentHost: {{ default "" .Values.config.host.ethereum.payment | quote }}
+  polygonPaymentHost: {{ default "" .Values.config.host.polygon.payment | quote }}
+  adminWalletHost: {{ default "" .Values.config.host.adminWallet | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
