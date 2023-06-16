@@ -6,9 +6,7 @@ metadata:
     {{- include "originals.labels" . | nindent 4 }}
     {{- include "originals.datadogLabels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "originals.selectorLabels" . | nindent 6 }}
@@ -184,6 +182,7 @@ spec:
               path: /
               port: http
             periodSeconds: 60
+            initialDelaySeconds: 10
           readinessProbe:
             httpGet:
               path: /

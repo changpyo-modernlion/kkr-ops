@@ -6,9 +6,7 @@ metadata:
     {{- include "payment.labels" . | nindent 4 }}
     {{- include "payment.datadogLabels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "payment.selectorLabels" . | nindent 6 }}
@@ -260,6 +258,7 @@ spec:
               path: /
               port: http
             periodSeconds: 60
+            initialDelaySeconds: 10
           readinessProbe:
             httpGet:
               path: /

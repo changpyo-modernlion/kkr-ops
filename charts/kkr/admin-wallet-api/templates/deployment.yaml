@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "admin-wallet-api.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "admin-wallet-api.selectorLabels" . | nindent 6 }}

@@ -6,9 +6,7 @@ metadata:
     {{- include "event-listener.labels" . | nindent 4 }}
     {{- include "event-listener.datadogLabels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "event-listener.selectorLabels" . | nindent 6 }}

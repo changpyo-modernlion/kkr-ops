@@ -6,9 +6,7 @@ metadata:
     {{- include "wallet-api.labels" . | nindent 4 }}
     {{- include "wallet-api.datadogLabels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "wallet-api.selectorLabels" . | nindent 6 }}
