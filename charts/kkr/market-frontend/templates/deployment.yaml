@@ -104,6 +104,16 @@ spec:
                 configMapKeyRef:
                   key: nodeEnv
                   name: {{ include "market-frontend.fullname" . }}
+            - name: CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: clientId
+                  name: {{ include "market-frontend.fullname" . }}
+            - name: CLIENT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: clientSecret
+                  name: {{ include "market-frontend.fullname" . }}
           ports:
             - name: http
               containerPort: 3000

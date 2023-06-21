@@ -30,6 +30,8 @@ config:
   utilitiesApiBaseUrl: ""
   utilitiesClaimBaseUrl: ""
   nodeEnv: ""
+  clientId: ""
+  clientSecret: ""
 
 responseTransformer:
   enabled: true

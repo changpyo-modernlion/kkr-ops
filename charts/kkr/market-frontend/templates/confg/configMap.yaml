@@ -17,3 +17,5 @@ data:
   utilitiesApiBaseUrl: {{ default "" .Values.config.utilitiesApiBaseUrl | quote  }}
   utilitiesClaimBaseUrl: {{ default "" .Values.config.utilitiesClaimBaseUrl | quote  }}
   nodeEnv: {{ default "" .Values.config.nodeEnv | quote  }}
+  clientId: {{ default "" .Values.config.clientId | quote  }}
+  clientSecret: {{ default "" .Values.config.clientSecret | quote  }}
