@@ -8,6 +8,7 @@ data:
   ethereumPaymentHost: {{ default "" .Values.config.host.ethereum.payment | quote }}
   polygonPaymentHost: {{ default "" .Values.config.host.polygon.payment | quote }}
   adminWalletHost: {{ default "" .Values.config.host.adminWallet | quote }}
+  claimApiHost: {{ default "" .Values.config.host.claimApi | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

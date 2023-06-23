@@ -23,6 +23,7 @@ config:
       backend: ""
       payment: ""
     adminWallet: ""
+    claimApi: ""
   oauth:
     clientId: "clientId"
     clientSecret: "clientSecret"

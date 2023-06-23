@@ -59,6 +59,11 @@ spec:
                 configMapKeyRef:
                   key: adminWalletHost
                   name: {{ include "originals.fullname" . }}-host
+            - name: CLAIM_API_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: claimApiHost
+                  name: {{ include "originals.fullname" . }}-host
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
